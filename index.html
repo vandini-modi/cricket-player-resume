@@ -1,74 +1,371 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricket Player Resume</title>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 5px; }
-        h1, h2 { color: #333; }
-        section { margin-bottom: 20px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cricket Player Resume — Dhyey Modi</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --accent-1:#6D28D9; /* purple */
+      --accent-2:#06b6d4; /* teal */
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.7);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Poppins", Arial, sans-serif;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(109,40,217,0.06), transparent 10%),
+                  radial-gradient(900px 300px at 90% 90%, rgba(6,182,212,0.04), transparent 10%),
+                  var(--bg);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    .container{
+      max-width:1000px;
+      margin:36px auto;
+      padding:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+      border-radius:18px;
+      box-shadow: 0 10px 30px rgba(18,24,40,0.08);
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:28px;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+      padding:22px;
+      background: linear-gradient(180deg, rgba(109,40,217,0.06), rgba(6,182,212,0.02));
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      min-height:360px;
+    }
+
+    .profile{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .avatar{
+      width:88px;
+      height:88px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-size:28px;
+      box-shadow: 0 6px 18px rgba(109,40,217,0.16), inset 0 -6px 18px rgba(255,255,255,0.06);
+      flex-shrink:0;
+    }
+    .name{
+      display:flex;
+      flex-direction:column;
+    }
+    .name h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:0.2px;
+    }
+    .name p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .contact{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .contact .item{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:rgba(255,255,255,0.7);
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:600;
+      color:var(--accent-1);
+      width:fit-content;
+      box-shadow: 0 4px 10px rgba(16,24,40,0.04);
+    }
+
+    /* Skills */
+    .skills{display:flex;flex-direction:column;gap:10px}
+    .skill{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .skill .label{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+    .bar{
+      height:10px;
+      background:linear-gradient(90deg, rgba(15,23,42,0.06), rgba(15,23,42,0.04));
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar > span{
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      border-radius:999px;
+      transition:width 700ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* MAIN */
+    .main{
+      padding:22px;
+    }
+    .header-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    .title{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .title h2{margin:0;font-size:18px;color:#0b1220}
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    .stat{
+      background:linear-gradient(180deg, rgba(255,255,255,0.8), var(--glass));
+      padding:12px;
+      border-radius:12px;
+      text-align:center;
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+    }
+    .stat .num{font-size:20px;font-weight:700;color:var(--accent-1)}
+    .stat .label{font-size:12px;color:var(--muted)}
+
+    section.card{
+      margin-top:18px;
+      padding:16px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98));
+      box-shadow: 0 8px 26px rgba(11,20,40,0.03);
+    }
+
+    /* Achievements */
+    ul.achievements{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    ul.achievements li{
+      display:flex;gap:12px;align-items:flex-start;padding:8px;border-radius:8px;
+      transition:background 180ms;
+    }
+    ul.achievements li:hover{background:rgba(6,182,212,0.03)}
+    .badge{
+      min-width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,var(--accent-2),var(--accent-1));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      box-shadow: 0 6px 16px rgba(6,182,212,0.08);
+      flex-shrink:0;
+    }
+    .ach-text{font-size:14px;color:#0b1220}
+
+    /* Performance table */
+    table.stats-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+    table.stats-table th, table.stats-table td{
+      padding:10px 12px;
+      text-align:left;
+      border-bottom:1px dashed rgba(15,23,42,0.06);
+    }
+    table.stats-table th{
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+    }
+    .best{font-weight:700;color:var(--accent-1)}
+    .muted{color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .container{grid-template-columns:1fr; padding:18px}
+      .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      .cards{grid-template-columns:1fr}
+      .avatar{width:72px;height:72px;font-size:24px}
+    }
+
+    /* Print-friendly */
+    @media print{
+      body{background:white}
+      .container{box-shadow:none}
+    }
+  </style>
+
 </head>
 <body>
-<div class="container">
-    <h1>Cricket Player Resume</h1>
+  <div class="container" role="main" aria-label="Cricket Player Resume">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="profile" aria-hidden="false">
+        <div class="avatar" title="Dhyey Modi">DM</div>
+        <div class="name">
+          <h1>Dhyey Modi</h1>
+          <p class="muted">All-rounder • Right-hand Bat • Right-arm Medium-fast</p>
+        </div>
+      </div>
 
-    <section id="personal-information">
-        <h2>Personal Information</h2>
-        <p><strong>Name:</strong> Dhyey Modi</p>
-        <p><strong>Age:</strong> 18</p>
-        <p><strong>Email:</strong> dhyey.modi@gmail.com</p>
-        <p><strong>Phone:</strong> +91 (799) 0035-270</p>
-        <p><strong>Location:</strong> Vadodara, India</p>
-    </section>
+      <div class="contact" aria-label="Contact information">
+        <div class="item"><strong class="chip">Age</strong><span class="muted">18</span></div>
+        <div class="item"><strong class="chip">Location</strong><span class="muted">Vadodara, India</span></div>
+        <div class="item"><strong class="chip">Phone</strong><span class="muted">+91 (799) 0035-270</span></div>
+        <div class="item"><strong class="chip">Email</strong><span class="muted">dhyey.modi@gmail.com</span></div>
+      </div>
 
-    <section id="achievements">
-        <h2>Achievements</h2>
-        <ul>
-            <li>[Achievement 1]</li>
-            <li>[Achievement 2]</li>
-            <li>[Achievement 3]</li>
-            <li>[Achievement 4]</li>
+      <div>
+        <h3 style="margin:0 0 8px 0;font-size:14px;color:#0b1220">Key Skills</h3>
+        <div class="skills" aria-hidden="false">
+          <div class="skill">
+            <div class="label"><span>Batting (Technique)</span><span>90%</span></div>
+            <div class="bar"><span style="width:90%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="label"><span>Bowling (Line & Length)</span><span>82%</span></div>
+            <div class="bar"><span style="width:82%"></span></div>
+          </div>
+          <div class="skill">
+            <div class="label"><span>Fielding</span><span>88%</span></div>
+            <div class="bar"><span style="width:88%"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 8px 0;font-size:14px;color:#0b1220">Playing Style</h3>
+        <p class="muted" style="margin:0;font-size:13px">Aggressive top-order batter who can anchor innings; disciplined seam bowling with focus on yorkers and cutters; excellent catcher in close-in positions.</p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="header-row">
+        <div class="title">
+          <h2>Performance Overview</h2>
+          <div class="meta">Updated: Feb 2026</div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="chip" title="Availability">Available</div>
+        </div>
+      </div>
+
+      <div class="cards" aria-hidden="false">
+        <div class="stat">
+          <div class="num">--</div>
+          <div class="label">Matches</div>
+        </div>
+        <div class="stat">
+          <div class="num">--</div>
+          <div class="label">Runs</div>
+        </div>
+        <div class="stat">
+          <div class="num">--</div>
+          <div class="label">Wickets</div>
+        </div>
+      </div>
+
+      <section class="card" id="achievements" aria-labelledby="achievements-heading">
+        <h3 id="achievements-heading" style="margin:0 0 12px 0">Achievements</h3>
+        <ul class="achievements">
+          <li><div class="badge">1</div><div class="ach-text">[Achievement 1 — replace with a short sentence about awards, selections or records]</div></li>
+          <li><div class="badge">2</div><div class="ach-text">[Achievement 2 — e.g., captained school/state team]</div></li>
+          <li><div class="badge">3</div><div class="ach-text">[Achievement 3 — man of the match / tournament performance]</div></li>
+          <li><div class="badge">4</div><div class="ach-text">[Achievement 4 — any coaching certifications or notable trainings]</div></li>
         </ul>
-    </section>
+      </section>
 
-    <section id="performance-statistics">
-        <h2>Performance Statistics</h2>
-        <table border="1" cellpadding="5">
-            <tr>
+      <section class="card" id="performance-statistics" aria-labelledby="performance-heading">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 id="performance-heading" style="margin:0">Performance Statistics</h3>
+          <div class="muted" style="font-size:13px">Click a row to highlight best performance</div>
+        </div>
+
+        <div style="overflow:auto;margin-top:12px">
+          <table class="stats-table" role="table" aria-label="Performance statistics">
+            <thead>
+              <tr>
                 <th>Match Type</th>
                 <th>Matches Played</th>
                 <th>Runs Scored</th>
                 <th>Wickets Taken</th>
                 <th>Best Performance</th>
-            </tr>
-            <tr>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tabindex="0" onclick="highlightRow(this)">
                 <td>Test</td>
-                <td>[Test Matches]</td>
-                <td>[Test Runs]</td>
-                <td>[Test Wickets]</td>
-                <td>[Best Test Performance]</td>
-            </tr>
-            <tr>
+                <td class="muted">[Test Matches]</td>
+                <td class="muted">[Test Runs]</td>
+                <td class="muted">[Test Wickets]</td>
+                <td class="best">[Best Test Performance]</td>
+              </tr>
+              <tr tabindex="0" onclick="highlightRow(this)">
                 <td>ODI</td>
-                <td>[ODI Matches]</td>
-                <td>[ODI Runs]</td>
-                <td>[ODI Wickets]</td>
-                <td>[Best ODI Performance]</td>
-            </tr>
-            <tr>
+                <td class="muted">[ODI Matches]</td>
+                <td class="muted">[ODI Runs]</td>
+                <td class="muted">[ODI Wickets]</td>
+                <td class="best">[Best ODI Performance]</td>
+              </tr>
+              <tr tabindex="0" onclick="highlightRow(this)">
                 <td>T20</td>
-                <td>[T20 Matches]</td>
-                <td>[T20 Runs]</td>
-                <td>[T20 Wickets]</td>
-                <td>[Best T20 Performance]</td>
-            </tr>
-        </table>
-    </section>
-</div>
+                <td class="muted">[T20 Matches]</td>
+                <td class="muted">[T20 Runs]</td>
+                <td class="muted">[T20 Wickets]</td>
+                <td class="best">[Best T20 Performance]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // small interactive nicety: highlight clicked row briefly
+    function highlightRow(row){
+      row.style.transition = 'background 300ms, transform 300ms';
+      row.style.background = 'linear-gradient(90deg, rgba(109,40,217,0.06), rgba(6,182,212,0.04))';
+      row.style.transform = 'translateY(-2px)';
+      setTimeout(()=>{ row.style.background=''; row.style.transform=''; }, 900);
+    }
+  </script>
 </body>
 </html>
