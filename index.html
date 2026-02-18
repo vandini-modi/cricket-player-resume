@@ -72,6 +72,14 @@
       box-shadow: 0 6px 18px rgba(109,40,217,0.16), inset 0 -6px 18px rgba(255,255,255,0.06);
       flex-shrink:0;
     }
+    /* show a real image if present */
+    .avatar img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      object-fit:cover;
+      display:block;
+    }
     .name{
       display:flex;
       flex-direction:column;
@@ -236,7 +244,10 @@
     <!-- SIDEBAR -->
     <aside class="sidebar" aria-label="Sidebar">
       <div class="profile" aria-hidden="false">
-        <div class="avatar" title="Dhyey Modi">DM</div>
+        <!-- replace initials with actual image placed at assets/profile.JPG -->
+        <div class="avatar" title="Dhyey Modi">
+          <img src="assets/profile.JPG" alt="Dhyey Modi">
+        </div>
         <div class="name">
           <h1>Dhyey Modi</h1>
           <p class="muted">All-rounder • Right-hand Bat • Right-arm Medium-fast</p>
