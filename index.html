@@ -449,16 +449,29 @@
       const targets = [140,235,231];
       statEls.forEach((el,i)=> animateCounter(el, targets[i]));
 
-      // Copy email quick action
-      const emailText = document.querySelector('.contact .item strong + span');
-      if(emailText){
-        const btn = document.createElement('button');
-        btn.textContent = 'Copy email';
-        btn.style.marginLeft='8px';
-        btn.className='chip';
-        btn.onclick = ()=>{ navigator.clipboard?.writeText(emailText.textContent.trim()); btn.textContent='Copied'; setTimeout(()=>btn.textContent='Copy email',1500); };
-        emailText.parentNode.appendChild(btn);
-      }
+      // WhatsApp quick action next to Phone item
+      // finds the contact item whose <strong> label is "Phone" (case-insensitive)
+      const contactItems = document.querySelectorAll('.contact .item');
+      contactItems.forEach(item => {
+        const label = item.querySelector('strong');
+        if(!label) return;
+        if(label.textContent.trim().toLowerCase() === 'phone'){
+          const numberSpan = label.nextElementSibling;
+          if(!numberSpan) return;
+          // sanitize phone number to digits (international format expected)
+          const digits = (numberSpan.textContent || '').replace(/\D/g,'');
+          if(!digits) return;
+          const a = document.createElement('a');
+          a.href = `https://wa.me/${digits}`;
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.className = 'chip';
+          a.style.marginLeft = '8px';
+          a.textContent = 'WhatsApp';
+          // append the link to the same .item container (after the number)
+          item.appendChild(a);
+        }
+      });
     });
   </script>
 </body>
