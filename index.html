@@ -273,6 +273,9 @@
     @media (max-width:880px){
       .container{grid-template-columns:1fr; padding:18px}
       .cards{grid-template-columns:repeat(2,1fr)}
+      /* Avoid sticky / smooth-scroll issues on mobile */
+      .sidebar{position:static; top:auto}
+      html{scroll-behavior:auto}
     }
     @media (max-width:520px){
       .cards{grid-template-columns:1fr}
