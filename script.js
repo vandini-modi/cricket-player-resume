@@ -74,7 +74,7 @@ document.addEventListener('keydown', (event) => {
   function loadProfileText(){
     const container = document.getElementById('profile-summary');
     if(!container) return;
-    fetch('profile.txt', {cache: "no-cache"})
+    fetch('assets/profile.txt', {cache: "no-cache"})
       .then(response => {
         if(!response.ok) throw new Error('Network response was not ok');
         return response.text();
@@ -86,7 +86,6 @@ document.addEventListener('keydown', (event) => {
       })
       .catch(err => {
         console.warn('Failed to load profile.txt:', err);
-        // fallback: keep inline message
         container.textContent = 'Profile information is currently unavailable.';
       });
   }
