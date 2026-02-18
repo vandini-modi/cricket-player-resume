@@ -337,7 +337,11 @@
 
       <!-- Short profile paragraph placed directly after CricHeroes (card-styled for alignment) -->
       <section class="card" aria-label="Profile summary" style="margin-top:12px;">
-        <div id="profile-summary" class="profile-summary muted" aria-live="polite">Loading profile…</div>
+        <div id="profile-summary" class="profile-summary muted" aria-live="polite">
+          Loading profile…
+          <!-- object loads assets/profile.txt when JS is disabled or fetcher fails -->
+          <object id="profile-fallback" data="assets/profile.txt" type="text/plain" style="display:block;margin-top:8px;white-space:pre-wrap;"></object>
+        </div>
       </section>
 
       <div class="cards" aria-hidden="false">
