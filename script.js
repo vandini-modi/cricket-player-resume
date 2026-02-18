@@ -32,69 +32,87 @@ document.addEventListener('keydown', (event) => {
 (function(){
   'use strict';
 
-  // helpers
-  function sanitizeDigits(s){ return (s||'').replace(/\D/g,''); }
+  // simple fetcher for small text files
+  async function fetchText(path){
+    try{
+      const res = await fetch(path, { cache: 'no-cache' });
+      if(!res.ok) throw new Error('fetch failed');
+      return (await res.text()).trim();
+    }catch(err){
+      console.warn('fetchText failed', path, err);
+      return null;
+    }
+  }
 
-  // age calculation (robust)
+  // parse DOB like "24 November 2006" into age
   function ageFromDobString(dobStr){
     if(!dobStr) return null;
-    // try native parse first
     let d = new Date(dobStr);
-    if (isNaN(d)) {
-      // support "DD Month YYYY" or "DD Month, YYYY"
-      const parts = dobStr.trim().replace(/,+/g, '').split(/\s+/);
-      if (parts.length >= 3) {
-        const day = parts[0].replace(/\D/g, '');
+    if(isNaN(d)){
+      const parts = dobStr.replace(/,+/g,'').split(/\s+/);
+      if(parts.length >= 3){
+        const day = parts[0].replace(/\D/g,'');
         const month = parts[1];
         const year = parts.slice(2).join(' ');
         d = new Date(`${month} ${day}, ${year}`);
       }
     }
-    if (isNaN(d)) return null;
-    const today = new Date();
-    let age = today.getFullYear() - d.getFullYear();
-    const m = today.getMonth() - d.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+    if(isNaN(d)) return null;
+    const now = new Date();
+    let age = now.getFullYear() - d.getFullYear();
+    const m = now.getMonth() - d.getMonth();
+    if(m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
     return age;
   }
 
-  function initAgeFromDob() {
-    const dobItem = document.querySelector('.contact .item[data-key="dob"]');
-    const ageSpan = document.querySelector('.contact .item[data-key="age"] [data-age]');
-    if (!dobItem || !ageSpan) return;
-    const dobSpan = dobItem.querySelector('span');
-    const dobText = dobSpan ? dobSpan.textContent.trim() : '';
-    const computed = ageFromDobString(dobText);
-    if (computed !== null) {
-      ageSpan.textContent = String(computed);
+  // populate contact items from data-file attributes
+  async function initContactFromAssets(){
+    const items = document.querySelectorAll('.contact .item');
+    let dobText = null;
+    for(const item of items){
+      const file = item.dataset.file;
+      const key = item.dataset.key;
+      const span = item.querySelector('span');
+      if(!span) continue;
+      if(file){
+        const text = await fetchText(file);
+        if(text) span.textContent = text;
+        // remember dob to compute age later
+        if(key === 'dob') dobText = text || span.textContent;
+      }
     }
+    // compute & set age if DOB found
+    const ageSpan = document.querySelector('.contact .item[data-key="age"] [data-age]');
+    if(dobText && ageSpan){
+      const computed = ageFromDobString(dobText);
+      if(computed !== null) ageSpan.textContent = String(computed);
+    }
+    // init WhatsApp (after phone is populated)
+    initWhatsApp();
   }
 
-  // fetch profile text and inject into #profile-summary
-  function loadProfileText(){
-    const container = document.getElementById('profile-summary');
-    if(!container) return;
-    fetch('assets/profile.txt', {cache: "no-cache"})
-      .then(response => {
-        if(!response.ok) throw new Error('Network response was not ok');
-        return response.text();
-      })
-      .then(text => {
-        // split into paragraphs on one-or-more blank lines
-        const paras = text.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
-        container.innerHTML = paras.map(p => `<p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">${escapeHtml(p)}</p>`).join('');
-      })
-      .catch(err => {
-        console.warn('Failed to load profile.txt:', err);
-        container.textContent = 'Profile information is currently unavailable.';
-      });
+  // create WhatsApp chip using phone text (sanitizes digits)
+  function sanitizeDigits(s){ return (s||'').replace(/\D/g,''); }
+  function initWhatsApp(){
+    const phoneItem = document.querySelector('.contact .item[data-key="phone"]');
+    if(!phoneItem) return;
+    if(phoneItem.querySelector('a.whatsapp-link')) return;
+    const span = phoneItem.querySelector('span');
+    const digits = sanitizeDigits(span ? span.textContent : '');
+    if(!digits) return;
+    const a = document.createElement('a');
+    a.className = 'chip whatsapp-link';
+    a.href = `https://wa.me/${digits}`;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = 'WhatsApp';
+    a.style.marginLeft = '8px';
+    phoneItem.appendChild(a);
   }
 
-  // simple HTML escaper
-  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
+  // existing inits...
   document.addEventListener('DOMContentLoaded', function () {
-    initAgeFromDob();
-    loadProfileText();
+    // existing initializers...
+    initContactFromAssets();
   });
 })();
