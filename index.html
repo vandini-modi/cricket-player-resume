@@ -305,7 +305,7 @@
       </div>
 
       <div class="contact" aria-label="Contact information">
-        <div class="item" data-key="age"><strong class="chip chip-2">Age</strong><span class="muted">19</span></div>
+        <div class="item" data-key="age"><strong class="chip chip-2">Age</strong><span class="muted" data-age aria-live="polite">—</span></div>
         <div class="item" data-key="dob"><strong class="chip chip-2">DOB</strong><span class="muted">24 November 2006</span></div>
         <div class="item" data-key="location"><strong class="chip">Location</strong><span class="muted">Vadodara, India</span></div>
         <div class="item" data-key="phone"><strong class="chip">Phone</strong><span class="muted">+91 (799) 0035-270</span></div>
@@ -337,11 +337,7 @@
 
       <!-- Short profile paragraph placed directly after CricHeroes (card-styled for alignment) -->
       <section class="card" aria-label="Profile summary" style="margin-top:12px;">
-        <p style="margin:0;font-size:14px;color:#0b1220;line-height:1.5">
-          Since the age of 9, cricket has been my true passion, and I have dedicated myself to the sport with unwavering enthusiasm.
-          Through years of hard work and practice, I have honed my cricket skills and emerged as a reliable right-arm bowler with the ability to adapt to varying conditions and situations.
-          With my strong work ethic, tactical awareness, and persistent perseverance to achieve success at the highest level of cricket, I am confident that I can make a valuable contribution to any team and help achieve unparalleled success.
-        </p>
+        <div id="profile-summary" class="profile-summary muted" aria-live="polite">Loading profile…</div>
       </section>
 
       <div class="cards" aria-hidden="false">
