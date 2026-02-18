@@ -12,8 +12,9 @@
     :root{
       --bg:#f4f7fb;
       --card:#ffffff;
-      --accent-1:#1019d3; /* blue */
-      --accent-2:#1f4e88; /* blue */
+      --accent-1:#35CAFE; /* Highlighter Blue */
+      --accent-2:#078BDC; /* Blue Ball */
+      --accent-3:#F5895A; /* Saffron */
       --muted:#6b7280;
       --glass: rgba(255,255,255,0.7);
       --radius:14px;
@@ -29,6 +30,10 @@
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
+
+    /* Links use accent-1 */
+    a, .hl-links a { color: var(--accent-1); }
+    a:hover, .hl-links a:hover { text-decoration: underline; }
 
     .container{
       max-width:1000px;
@@ -72,6 +77,10 @@
       box-shadow: 0 6px 18px rgba(109,40,217,0.16), inset 0 -6px 18px rgba(255,255,255,0.06);
       flex-shrink:0;
     }
+    /* chip variants */
+    .chip { /* default chip color for general chips */ color: var(--accent-1); }
+    .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
+    .chip.avail { color: var(--accent-3); } /* availability uses accent-3 */
     /* show a real image if present */
     .avatar img{
       width:100%;
@@ -274,8 +283,8 @@
       </div>
 
       <div class="contact" aria-label="Contact information">
-        <div class="item"><strong class="chip">Age</strong><span class="muted">18</span></div>
-        <div class="item"><strong class="chip">DOB</strong><span class="muted">24 November 2006</span></div>
+        <div class="item"><strong class="chip chip-2">Age</strong><span class="muted">18</span></div>
+        <div class="item"><strong class="chip chip-2">DOB</strong><span class="muted">24 November 2006</span></div>
         <div class="item"><strong class="chip">Location</strong><span class="muted">Vadodara, India</span></div>
         <div class="item"><strong class="chip">Phone</strong><span class="muted">+91 (799) 0035-270</span></div>
         <div class="item"><strong class="chip">Email</strong><span class="muted">dhyeymodi2411@gmail.com </span></div>
@@ -292,16 +301,15 @@
         </div>
 
         <div style="display:flex;gap:10px;align-items:center">
-          <div class="chip" title="Availability">Available</div>
+          <div class="chip avail" title="Availability">Available</div>
         </div>
       </div>
 
       <!-- CricHeroes quick access (placed before Profile) -->
       <section class="card" id="cricheroes" aria-labelledby="cricheroes-heading">
-        <h3 id="cricheroes-heading" style="margin:0 0 12px 0">CricHeroes — Full match list</h3>
-        <p class="muted" style="margin:0 0 10px;font-size:13px">Open the complete match list and recent performance on CricHeroes.</p>
+        <h3 id="cricheroes-heading" style="margin:0 0 12px 0">CricHeroes — Full Profile</h3>
         <div class="hl-links">
-          <a href="https://cricheroes.com/player-profile/301505/dhyey-parag-modi/matches" target="_blank" rel="noopener">View full match list on CricHeroes</a>
+          <a href="https://cricheroes.com/player-profile/301505/dhyey-parag-modi/matches" target="_blank" rel="noopener">View my profile on CricHeroes</a>
         </div>
       </section>
 
@@ -352,11 +360,11 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> <!-- Match Statistics Highlights -->
 
-      <!-- Combined Press & Education (moved here after match highlights) -->
-      <div class="card" id="press-education" aria-label="Press and Education" style="display:flex;flex-direction:column;gap:14px;">
-        <div id="press-media" aria-labelledby="press-media-heading">
+      <!-- Press & Media + Education (placed directly after Match Statistics Highlights) -->
+      <section class="card" id="press-education" aria-label="Press and Education">
+        <div id="press-media" aria-labelledby="press-media-heading" style="margin-bottom:12px">
           <h3 id="press-media-heading" style="margin:0 0 6px 0">Press & Media — Applauses</h3>
           <p class="muted" style="margin:0 0 8px;font-size:13px">Applauses received through newspapers</p>
           <div class="hl-links" style="margin-top:4px">
@@ -392,7 +400,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </main>
   </div>
 
