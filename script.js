@@ -1,32 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cricket Player Resume — Dhyey Modi</title>
 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
 
-// script.js
-
-// Smooth Scrolling
-const smoothScrollTo = (target) => {
-    document.querySelector(target).scrollIntoView({
-        behavior: 'smooth'
-    });
-};
-
-// Dynamic Statistics
-const updateStatistics = (element, value) => {
-    const statElement = document.querySelector(element);
-    statElement.textContent = value;
-};
-
-// Keyboard Navigation
-document.addEventListener('keydown', (event) => {
-    switch(event.key) {
-        case 'ArrowUp':
-            smoothScrollTo('#section1');
-            break;
-        case 'ArrowDown':
-            smoothScrollTo('#section2');
-            break;
-        // Add more cases for other sections
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --accent-1:#6D28D9; /* purple */
+      --accent-2:#06b6d4; /* teal */
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.7);
+      --radius:14px;
     }
-});
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Poppins", Arial, sans-serif;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(109,40,217,0.06), transparent 10%),
+                  radial-gradient(900px 300px at 90% 90%, rgba(6,182,212,0.04), transparent 10%),
+                  var(--bg);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
 
-// Example usage of updateStatistics
-// updateStatistics('#stat1', '100'); // Call this to update statistics
+    .container{
+      max-width:1000px;
+      margin:36px auto;
+      padding:28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+      border-radius:18px;
+      box-shadow: 0 10px 30px rgba(18,24,40,0.08);
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:28px;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+      padding:22px;
+      background: linear-gradient(180deg, rgba(109,40,217,0.06), rgba(6,182,212,0.02));
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      min-height:360px;
+    }
+
+    .profile{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .avatar{
+      width:88px;
+      height:88px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-size:28px;
+      box-shadow: 0 6px 18px rgba(109,40,217,0.16), inset 0 -6px 18px rgba(255,255,255,0.06);
+      flex-shrink:0;
+    }
+    /* show a real image if present */
+    .avatar img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      object-fit:cover;
+      display:block;
+    }
+    .name{
+      display:flex;
+      flex-direction:column;
+    }
+    .name h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:0.2px;
+    }
+    .name p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .contact{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .contact .item{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:rgba(255,255,255,0.7);
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:600;
+      color:var(--accent-1);
+      width:fit-content;
+      box-shadow: 0 4px 10px rgba(16,24,40,0.04);
+    }
+
+    /* Skills */
+    .skills{display:flex;flex-direction:column;gap:10px}
+    .skill{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .skill .label{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+    .bar{
+      height:10px;
+      background:linear-gradient(90deg, rgba(15,23,42,0.06), rgba(15,23,42,0.04));
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar > span{
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      border-radius:999px;
+      transition:width 700ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* MAIN */
+    .main{
+      padding:22px;
+    }
+    .header-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    .title{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .title h2{margin:0;font-size:18px;color:#0b1220}
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    /* Match highlights */
+    .highlights{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+    .hl-card{
+      padding:12px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), var(--glass));
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+    }
+    .hl-card h4{margin:0 0 8px 0;font-size:14px;color:#0b1220}
+    .hl-links a{display:inline-block;margin-right:10px;color:var(--accent-1);font-weight:600;text-decoration:none}
+    .hl-links a:hover{text-decoration:underline}
+
+    .stat{
+      background:linear-gradient(180deg, rgba(255,255,255,0.8), var(--glass));
+      padding:12px;
+      border-radius:12px;
+      text-align:center;
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+    }
+    .stat .num{font-size:20px;font-weight:700;color:var(--accent-1)}
+    .stat .label{font-size:12px;color:var(--muted)}
+
+    section.card{
+      margin-top:18px;
+      padding:16px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98));
+      box-shadow: 0 8px 26px rgba(11,20,40,0.03);
+    }
+
+    /* Achievements */
+    ul.achievements{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    ul.achievements li{
+      display:flex;gap:12px;align-items:flex-start;padding:8px;border-radius:8px;
+      transition:background 180ms;
+    }
+    ul.achievements li:hover{background:rgba(6,182,212,0.03)}
+    .badge{
+      min-width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,var(--accent-2),var(--accent-1));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      box-shadow: 0 6px 16px rgba(6,182,212,0.08);
+      flex-shrink:0;
+    }
+    .ach-text{font-size:14px;color:#0b1220}
+
+    /* Performance table */
+    table.stats-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+    table.stats-table th, table.stats-table td{
+      padding:10px 12px;
+      text-align:left;
+      border-bottom:1px dashed rgba(15,23,42,0.06);
+    }
+    table.stats-table th{
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+    }
+    .best{font-weight:700;color:var(--accent-1)}
+    .muted{color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .container{grid-template-columns:1fr; padding:18px}
+      .cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      .cards{grid-template-columns:1fr}
+      .avatar{width:72px;height:72px;font-size:24px}
+    }
+
+    /* Print-friendly */
+    @media print{
+      body{background:white}
+      .container{box-shadow:none}
+    }
+  </style>
+
+</head>
+<body>
+  <!-- CricHeroes profile (quick access) -->
+  <div style="max-width:1000px;margin:18px auto 0;padding:8px 28px;">
+    <a href="https://cricheroes.com/player-profile/301505/dhyey-parag-modi/matches" target="_blank" rel="noopener" class="chip" style="background:rgba(255,255,255,0.95);">View full match list on CricHeroes</a>
+  </div>
+  <div class="container" role="main" aria-label="Cricket Player Resume">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Sidebar">
+      <div class="profile" aria-hidden="false">
+        <!-- replace initials with actual image placed at assets/profile.JPG -->
+        <div class="avatar" title="Dhyey Modi">
+          <img src="assets/profile.JPG" alt="Dhyey Modi">
+        </div>
+        <div class="name">
+          <h1>Dhyey Modi</h1>
+          <p class="muted">All-rounder • Right-hand Bat • Right-arm Medium-fast</p>
+        </div>
+      </div>
+
+      <div class="contact" aria-label="Contact information">
+        <div class="item"><strong class="chip">Age</strong><span class="muted">18</span></div>
+        <div class="item"><strong class="chip">DOB</strong><span class="muted">24 November 2006</span></div>
+        <div class="item"><strong class="chip">Location</strong><span class="muted">Vadodara, India</span></div>
+        <div class="item"><strong class="chip">Phone</strong><span class="muted">+91 (799) 0035-270</span></div>
+        <div class="item"><strong class="chip">Email</strong><span class="muted">dhyey.modi@gmail.com</span></div>
+        <div class="item">
+          <strong class="chip">Education</strong>
+          <div class="muted" style="font-size:13px;line-height:1.3">
+            Divan Ballubhai Madhyamkik Shala, Ahmedabad — SSC (Jun 2021 – May 2022), 72%<br>
+            Divan Ballubhai Madhyamkik Shala, Ahmedabad — HSC (Jun 2022 – May 2023), 78%<br>
+            MSU, Vadodara, Gujarat — BCom, 2nd year
+          </div>
+        </div>
+
+      <div>
+        <h3 style="margin:0 0 8px 0;font-size:14px;color:#0b1220">Key Skills</h3>
+        <div class="skills" aria-hidden="false">
+          <div class="skill">
+            <div class="label"><span>Death-overs bowling (yorkers & variations)</span><span>90%</span></div>
+            <div class="bar"><span style="width:90%"></span></div>
+            <div class="muted" style="font-size:12px;margin-top:6px">Proven by consistent sub‑6.5 economy in last season's death overs.</div>
+          </div>
+
+          <div class="skill">
+            <div class="label"><span>Late swing & seam movement</span><span>86%</span></div>
+            <div class="bar"><span style="width:86%"></span></div>
+            <div class="muted" style="font-size:12px;margin-top:6px">Effective in overcast conditions; regular early breakthrough bowler.</div>
+          </div>
+
+          <div class="skill">
+            <div class="label"><span>Batting — technique & strike rotation</span><span>78%</span></div>
+            <div class="bar"><span style="width:78%"></span></div>
+            <div class="muted" style="font-size:12px;margin-top:6px">Reliable lower-order contributor; quick rotate of strike under pressure.</div>
+          </div>
+
+          <div class="skill">
+            <div class="label"><span>Fielding — reflexes & catching</span><span>88%</span></div>
+            <div class="bar"><span style="width:88%"></span></div>
+            <div class="muted" style="font-size:12px;margin-top:6px">Fast ground coverage and safe hands in the inner ring.</div>
+          </div>
+        </div>
+       </div>
+
+      <div>
+        <h3 style="margin:0 0 8px 0;font-size:14px;color:#0b1220">Playing Style</h3>
+        <p class="muted" style="margin:0;font-size:13px;line-height:1.4">
+          Primary right-arm medium-fast bowler with strength in generating late swing and seam movement,
+          executing pinpoint yorkers and cutters, and maintaining disciplined lines in the death overs.
+          Calm under pressure, tactically aware, and an athletic close-in/inner‑ring fielder with excellent reflexes.
+        </p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+      <div class="header-row">
+        <div class="title">
+          <h2>Performance Overview</h2>
+          <div class="meta">Updated: Feb 2026</div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="chip" title="Availability">Available</div>
+        </div>
+      </div>
+
+      <!-- Profile summary / description -->
+      <section class="card" id="profile-summary" aria-labelledby="profile-summary-heading">
+        <h3 id="profile-summary-heading" style="margin:0 0 12px 0">Profile</h3>
+        <p style="margin:0 0 8px 0;font-size:14px;color:#0b1220;line-height:1.5">
+          Since the age of 9, cricket has been my true passion, and I have dedicated myself to the sport with unwavering enthusiasm.
+          Through years of hard work and practice, I have honed my cricket skills and emerged as a reliable right-arm bowler with the ability to adapt to varying conditions and situations.
+          With my strong work ethic, tactical awareness, and persistent perseverance to achieve success at the highest level of cricket, I am confident that I can make a valuable contribution to any team and help them achieve unparalleled success.
+        </p>
+      </section>
+
+      <div class="cards" aria-hidden="false">
+        <div class="stat">
+          <div class="num">140</div>
+          <div class="label">Matches</div>
+        </div>
+        <div class="stat">
+          <div class="num">235</div>
+          <div class="label">Wickets</div>
+        </div>
+        <div class="stat">
+          <div class="num">231</div>
+          <div class="label">Maidens</div>
+        </div>
+      </div>
+
+      <!-- Match Statistics Highlights -->
+      <section class="card" id="match-highlights" aria-labelledby="match-highlights-heading">
+        <h3 id="match-highlights-heading" style="margin:0 0 12px 0">Match Statistics Highlights</h3>
+        <div class="highlights" role="region" aria-label="Match highlights">
+          <div class="hl-card" aria-labelledby="overall-stats">
+            <h4 id="overall-stats">Overall statistics</h4>
+            <p class="muted" style="margin:0 0 10px;font-size:13px">Open the full performance summary on CricHeroes</p>
+            <div class="hl-links">
+              <a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/stats" target="_blank" rel="noopener">View overall stats</a>
+            </div>
+          </div>
+
+          <div class="hl-card" aria-labelledby="awards-badges">
+            <h4 id="awards-badges">Awards & Badges</h4>
+            <p class="muted" style="margin:0 0 10px;font-size:13px">Track awards progress and earned badges on the CricHeroes profile page.</p>
+            <div class="hl-links">
+              <a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/awards" target="_blank" rel="noopener">Awards progress</a></div>
+              <a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/badges" target="_blank" rel="noopener">Badges</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="press-media" aria-labelledby="press-media-heading">
+        <h3 id="press-media-heading" style="margin:0 0 12px 0">Press & Media — Applauses</h3>
+        <p class="muted" style="margin:0 0 10px;font-size:13px">Applauses received through newspapers</p>
+        <div class="hl-links">
+          <a href="https://drive.google.com/file/d/1lAvKMJRQiX6aIbxpC90bUY4mn2c4DoC3/view" target="_blank" rel="noopener">View applauses / newspaper clippings (Google Drive)</a>
+        </div>
+      </section>
+
+      <!-- Achievements section removed -->
+    </main>
+  </div>
+
+  <script>
+    // small interactive nicety: highlight clicked row briefly
+    function highlightRow(row){
+      row.style.transition = 'background 300ms, transform 300ms';
+      row.style.background = 'linear-gradient(90deg, rgba(109,40,217,0.06), rgba(6,182,212,0.04))';
+      row.style.transform = 'translateY(-2px)';
+      setTimeout(()=>{ row.style.background=''; row.style.transform=''; }, 900);
+    }
+  </script>
+</body>
+</html>
