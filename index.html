@@ -169,6 +169,23 @@
       gap:12px;
       margin-top:18px;
     }
+    /* Match highlights */
+    .highlights{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+    .hl-card{
+      padding:12px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), var(--glass));
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+    }
+    .hl-card h4{margin:0 0 8px 0;font-size:14px;color:#0b1220}
+    .hl-links a{display:inline-block;margin-right:10px;color:var(--accent-1);font-weight:600;text-decoration:none}
+    .hl-links a:hover{text-decoration:underline}
+
     .stat{
       background:linear-gradient(180deg, rgba(255,255,255,0.8), var(--glass));
       padding:12px;
@@ -256,9 +273,11 @@
 
       <div class="contact" aria-label="Contact information">
         <div class="item"><strong class="chip">Age</strong><span class="muted">18</span></div>
+        <div class="item"><strong class="chip">DOB</strong><span class="muted">24 November 2026</span></div>
         <div class="item"><strong class="chip">Location</strong><span class="muted">Vadodara, India</span></div>
         <div class="item"><strong class="chip">Phone</strong><span class="muted">+91 (799) 0035-270</span></div>
         <div class="item"><strong class="chip">Email</strong><span class="muted">dhyey.modi@gmail.com</span></div>
+        <div class="item"><strong class="chip">Education</strong><span class="muted">[Add school / college details]</span></div>
       </div>
 
       <div>
@@ -298,6 +317,16 @@
         </div>
       </div>
 
+      <!-- Profile summary / description -->
+      <section class="card" id="profile-summary" aria-labelledby="profile-summary-heading">
+        <h3 id="profile-summary-heading" style="margin:0 0 12px 0">Profile</h3>
+        <p style="margin:0 0 8px 0;font-size:14px;color:#0b1220;line-height:1.5">
+          Since the age of 9, cricket has been my true passion, and I have dedicated myself to the sport with unwavering enthusiasm.
+          Through years of hard work and practice, I have honed my cricket skills and emerged as a reliable right-arm bowler with the ability to adapt to varying conditions and situations.
+          With my strong work ethic, tactical awareness, and persistent perseverance to achieve success at the highest level of cricket, I am confident that I can make a valuable contribution to any team and help them achieve unparalleled success.
+        </p>
+      </section>
+
       <div class="cards" aria-hidden="false">
         <div class="stat">
           <div class="num">--</div>
@@ -312,6 +341,29 @@
           <div class="label">Wickets</div>
         </div>
       </div>
+
+      <!-- Match Statistics Highlights -->
+      <section class="card" id="match-highlights" aria-labelledby="match-highlights-heading">
+        <h3 id="match-highlights-heading" style="margin:0 0 12px 0">Match Statistics Highlights</h3>
+        <div class="highlights" role="region" aria-label="Match highlights">
+          <div class="hl-card" aria-labelledby="overall-stats">
+            <h4 id="overall-stats">Overall statistics</h4>
+            <p class="muted" style="margin:0 0 10px;font-size:13px">Open the full performance summary on CricHeroes for complete match-by-match breakdown.</p>
+            <div class="hl-links">
+              <a href="https://cricheroes.in/player-profile/301505/Dhyey-Parag-Modi#STATS" target="_blank" rel="noopener">View overall stats</a>
+            </div>
+          </div>
+
+          <div class="hl-card" aria-labelledby="awards-badges">
+            <h4 id="awards-badges">Awards & Badges</h4>
+            <p class="muted" style="margin:0 0 10px;font-size:13px">Track awards progress and earned badges on the profile page.</p>
+            <div class="hl-links">
+              <a href="https://cricheroes.in/player-profile/301505/Dhyey-Parag-Modi#AWARD" target="_blank" rel="noopener">Awards progress</a>
+              <a href="https://cricheroes.in/player-profile/301505/Dhyey-Parag-Modi#BADGES" target="_blank" rel="noopener">Badges</a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section class="card" id="achievements" aria-labelledby="achievements-heading">
         <h3 id="achievements-heading" style="margin:0 0 12px 0">Achievements</h3>
