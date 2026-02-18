@@ -33,6 +33,7 @@ document.addEventListener('keydown', (event) => {
   'use strict';
 
   // helpers
+  // sanitize digits only (returns string like "919876543210")
   function sanitizeDigits(s){ return (s||'').replace(/\D/g,''); }
 
   // age calculation (robust)
@@ -93,8 +94,28 @@ document.addEventListener('keydown', (event) => {
   // simple HTML escaper
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
+  // add WhatsApp quick-link next to phone item
+  function initWhatsApp(){
+    const phoneItem = document.querySelector('.contact .item[data-key="phone"]');
+    if(!phoneItem) return;
+    // avoid adding twice
+    if(phoneItem.querySelector('a.whatsapp-link')) return;
+    const span = phoneItem.querySelector('span');
+    const digits = sanitizeDigits(span ? span.textContent : '');
+    if(!digits) return;
+    const a = document.createElement('a');
+    a.href = `https://wa.me/${digits}`;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.className = 'chip whatsapp-link';
+    a.style.marginLeft = '8px';
+    a.textContent = 'WhatsApp';
+    phoneItem.appendChild(a);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initAgeFromDob();
     loadProfileText();
+    initWhatsApp();
   });
 })();
