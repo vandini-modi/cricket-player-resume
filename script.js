@@ -101,25 +101,26 @@ document.addEventListener('keydown', (event) => {
     const phoneItem = document.querySelector('.contact .item[data-key="phone"]');
     addWhatsAppChip(phoneItem);
   }
-
-  async function loadProfileText(){
-    const container = document.getElementById('profile-summary');
-    if(!container) return;
-    container.innerHTML = '<span aria-hidden="true" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent-1);margin-right:8px;vertical-align:middle;animation:spin 900ms linear infinite;"></span>Loading profile…';
-    const timeout = setTimeout(()=>{
-      if(container && container.textContent && container.textContent.includes('Loading')) container.textContent = 'Profile is taking longer than expected.';
-    }, 6000);
-    try{
-      const text = await fetchText('assets/profile.txt');
-      clearTimeout(timeout);
-      if(!text) throw new Error('empty profile');
-      const paras = text.split(/\n{2,}/).map(p=>p.trim()).filter(Boolean);
-      container.innerHTML = paras.map(p=>`<p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">${escapeHtml(p)}</p>`).join('');
-    }catch(e){
-      console.warn('loadProfileText', e);
-      container.textContent = 'Profile information is currently unavailable.';
+/*
+    async function loadProfileText(){
+        const container = document.getElementById('profile-summary');
+        if(!container) return;
+        container.innerHTML = '<span aria-hidden="true" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent-1);margin-right:8px;vertical-align:middle;animation:spin 900ms linear infinite;"></span>Loading profile…';
+        const timeout = setTimeout(()=>{
+            if(container && container.textContent && container.textContent.includes('Loading')) container.textContent = 'Profile is taking longer than expected.';
+        }, 6000);
+        try{
+            const text = await fetchText('assets/profile.txt');
+            clearTimeout(timeout);
+            if(!text) throw new Error('empty profile');
+            const paras = text.split(/\n{2,}/).map(p=>p.trim()).filter(Boolean);
+            container.innerHTML = paras.map(p=>`<p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">${escapeHtml(p)}</p>`).join('');
+        }catch(e){
+            console.warn('loadProfileText', e);
+            container.textContent = 'Profile information is currently unavailable.';
+        }
     }
-  }
+*/
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
