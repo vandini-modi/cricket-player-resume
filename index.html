@@ -308,12 +308,14 @@
       </div>
 
       <div class="contact" aria-label="Contact information">
+        <!-- Age is computed from DOB below -->
         <div class="item" data-key="age"><strong class="chip chip-2">Age</strong><span class="muted" data-age aria-live="polite">—</span></div>
-        <div class="item" data-key="dob"><strong class="chip chip-2">DOB</strong><span class="muted">24 November 2006</span></div>
-        <div class="item" data-key="location"><strong class="chip">Location</strong><span class="muted">Vadodara, India</span></div>
-        <div class="item" data-key="phone"><strong class="chip">Phone</strong><span class="muted">+91 (799) 0035-270</span></div>
-        <div class="item" data-key="email"><strong class="chip">Email</strong><span class="muted">dhyeymodi2411@gmail.com </span></div>
-        <div class="item" data-key="languages"><strong class="chip">Languages</strong><span class="muted">Gujarati, Hindi, English</span></div>
+        <!-- Each item can point to an asset file; script.js will fetch and populate -->
+        <div class="item" data-key="dob" data-file="assets/dob.txt"><strong class="chip chip-2">DOB</strong><span class="muted" data-dob>—</span></div>
+        <div class="item" data-key="location" data-file="assets/location.txt"><strong class="chip">Location</strong><span class="muted">—</span></div>
+        <div class="item" data-key="phone" data-file="assets/phone.txt"><strong class="chip">Phone</strong><span class="muted">—</span></div>
+        <div class="item" data-key="email" data-file="assets/email.txt"><strong class="chip">Email</strong><span class="muted">—</span></div>
+        <div class="item" data-key="languages" data-file="assets/languages.txt"><strong class="chip">Languages</strong><span class="muted">—</span></div>
       </div>
     </aside>
 
@@ -342,8 +344,11 @@
       <section class="card" aria-label="Profile summary" style="margin-top:12px;">
         <div id="profile-summary" class="profile-summary muted" aria-live="polite">
           Loading profile…
-          <!-- object loads assets/profile.txt when JS is disabled or fetcher fails -->
-          <object id="profile-fallback" data="assets/profile.txt" type="text/plain" style="display:block;margin-top:8px;white-space:pre-wrap;"></object>
+          <noscript>
+            <div style="margin-top:8px">
+              <a href="assets/profile.txt" target="_blank" rel="noopener">Open profile text (no JavaScript)</a>
+            </div>
+          </noscript>
         </div>
       </section>
 
