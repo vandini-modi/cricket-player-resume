@@ -32,50 +32,43 @@ document.addEventListener('keydown', (event) => {
 (function () {
   'use strict';
 
-  // fetch small text file, return trimmed text or null
-  async function fetchText(path) {
-    try {
+  async function fetchText(path){
+    try{
       const res = await fetch(path, { cache: 'no-cache' });
-      if (!res.ok) throw new Error(`Fetch failed: ${res.status}`);
+      if(!res.ok) throw new Error(`${path} fetch ${res.status}`);
       return (await res.text()).trim();
-    } catch (err) {
-      console.warn('fetchText failed', path, err);
+    }catch(e){
+      console.warn('fetchText error', path, e);
       return null;
     }
   }
 
-  // robust DOB -> age parser
-  function ageFromDobString(dobStr) {
-    if (!dobStr) return null;
+  function ageFromDobString(dobStr){
+    if(!dobStr) return null;
     let d = new Date(dobStr);
-    if (isNaN(d)) {
-      // try "DD Month YYYY" or similar
-      const parts = dobStr.replace(/,+/g, '').split(/\s+/).filter(Boolean);
-      if (parts.length >= 3) {
-        const day = parts[0].replace(/\D/g, '');
-        const month = parts[1];
-        const year = parts.slice(2).join(' ');
+    if(isNaN(d)){
+      const parts = dobStr.replace(/,+/g,'').split(/\s+/).filter(Boolean);
+      if(parts.length >= 3){
+        const day = parts[0].replace(/\D/g,''), month = parts[1], year = parts.slice(2).join(' ');
         d = new Date(`${month} ${day}, ${year}`);
       }
     }
-    if (isNaN(d)) return null;
+    if(isNaN(d)) return null;
     const now = new Date();
     let age = now.getFullYear() - d.getFullYear();
     const m = now.getMonth() - d.getMonth();
-    if (m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
+    if(m < 0 || (m === 0 && now.getDate() < d.getDate())) age--;
     return age;
   }
 
-  // keep only digits (used for wa.me)
-  function sanitizeDigits(s) { return (s || '').replace(/\D/g, ''); }
+  function sanitizeDigits(s){ return (s||'').replace(/\D/g,''); }
 
-  // add WhatsApp chip next to phone item (avoids duplicates)
-  function addWhatsAppChip(phoneItem) {
-    if (!phoneItem) return;
-    if (phoneItem.querySelector('a.whatsapp-link')) return;
+  function addWhatsAppChip(phoneItem){
+    if(!phoneItem) return;
+    if(phoneItem.querySelector('a.whatsapp-link')) return;
     const span = phoneItem.querySelector('span');
     const digits = sanitizeDigits(span ? span.textContent : '');
-    if (!digits) return;
+    if(!digits) return;
     const a = document.createElement('a');
     a.className = 'chip whatsapp-link';
     a.href = `https://wa.me/${digits}`;
@@ -86,74 +79,61 @@ document.addEventListener('keydown', (event) => {
     phoneItem.appendChild(a);
   }
 
-  // populate contact items that have data-file attributes
-  async function initContactFromAssets() {
+  async function initContactFromAssets(){
     const items = Array.from(document.querySelectorAll('.contact .item'));
     let dobText = null;
-    for (const item of items) {
+    for(const item of items){
       const file = item.dataset.file;
       const key = item.dataset.key;
       const span = item.querySelector('span');
-      if (!span) continue;
-      if (file) {
+      if(!span) continue;
+      if(file){
         const text = await fetchText(file);
-        if (text) span.textContent = text;
-        // remember DOB for age computation
-        if (key === 'dob') dobText = text || span.textContent;
+        if(text) span.textContent = text;
+        if(key === 'dob') dobText = text || span.textContent;
       }
     }
-    // compute age
     const ageSpan = document.querySelector('.contact .item[data-key="age"] [data-age]');
-    if (dobText && ageSpan) {
+    if(dobText && ageSpan){
       const computed = ageFromDobString(dobText);
-      if (computed !== null) ageSpan.textContent = String(computed);
+      if(computed !== null) ageSpan.textContent = String(computed);
     }
-    // add WhatsApp after phone populated
     const phoneItem = document.querySelector('.contact .item[data-key="phone"]');
     addWhatsAppChip(phoneItem);
   }
 
-  // load profile text into #profile-summary with spinner + timeout
-  async function loadProfileText() {
+  async function loadProfileText(){
     const container = document.getElementById('profile-summary');
-    if (!container) return;
-    // spinner + initial message
+    if(!container) return;
     container.innerHTML = '<span aria-hidden="true" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--accent-1);margin-right:8px;vertical-align:middle;animation:spin 900ms linear infinite;"></span>Loading profile…';
-    const timeoutId = setTimeout(() => {
-      if (container && container.textContent && container.textContent.includes('Loading')) {
-        container.textContent = 'Profile is taking longer than expected.';
-      }
+    const timeout = setTimeout(()=>{
+      if(container && container.textContent && container.textContent.includes('Loading')) container.textContent = 'Profile is taking longer than expected.';
     }, 6000);
-
-    try {
+    try{
       const text = await fetchText('assets/profile.txt');
-      clearTimeout(timeoutId);
-      if (!text) throw new Error('empty profile');
-      const paras = text.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
-      container.innerHTML = paras.map(p => `<p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">${escapeHtml(p)}</p>`).join('');
-    } catch (err) {
-      console.warn('Failed to load profile.txt:', err);
+      clearTimeout(timeout);
+      if(!text) throw new Error('empty profile');
+      const paras = text.split(/\n{2,}/).map(p=>p.trim()).filter(Boolean);
+      container.innerHTML = paras.map(p=>`<p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">${escapeHtml(p)}</p>`).join('');
+    }catch(e){
+      console.warn('loadProfileText', e);
       container.textContent = 'Profile information is currently unavailable.';
     }
   }
 
-  // simple escaper
-  function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-  // init everything
-  document.addEventListener('DOMContentLoaded', function () {
-    // sequentially populate contact + profile
-    initContactFromAssets().catch(err => console.warn('initContactFromAssets', err));
-    loadProfileText().catch(err => console.warn('loadProfileText', err));
+  document.addEventListener('DOMContentLoaded', ()=>{
+    initContactFromAssets().catch(e=>console.warn('initContactFromAssets', e));
+    loadProfileText().catch(e=>console.warn('loadProfileText', e));
   });
 
-  // small keyframes injection for spinner (safe if style already exists)
-  (function injectSpinKeyframes(){
-    if (document.getElementById('spin-keyframes')) return;
-    const style = document.createElement('style');
-    style.id = 'spin-keyframes';
-    style.textContent = '@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
-    document.head.appendChild(style);
+  // inject spinner keyframes if missing
+  (function injectSpin(){
+    if(document.getElementById('spin-keyframes')) return;
+    const s = document.createElement('style'); s.id='spin-keyframes';
+    s.textContent='@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}';
+    document.head.appendChild(s);
   })();
 
 })();
