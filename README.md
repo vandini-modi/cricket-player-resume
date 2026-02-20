@@ -9,9 +9,3 @@ This repository contains a comprehensive webpage for showcasing a cricket player
 - **Achievements Section**: Highlights key achievements, awards, and milestones in the player's career.
 - **Gallery**: Photos and videos from matches and events.
 - **Contact Information**: Easily accessible contact details for sponsorships and inquiries.
-
-## Installation
-To set up the project locally, follow these steps:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/vandini-modi/cricket-player-resume.git
