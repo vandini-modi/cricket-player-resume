@@ -15,6 +15,7 @@
       --accent-1:#35CAFE; /* Highlighter Blue */
       --accent-2:#078BDC; /* Blue Ball */
       --accent-3:#F5895A; /* Saffron */
+      --accent-4:#138808; /* Green */
       --muted:#6b7280;
       --glass: rgba(255,255,255,0.7);
       --radius:14px;
@@ -50,7 +51,10 @@
     /* SIDEBAR */
     .sidebar{
       padding:22px;
-      background: linear-gradient(180deg, rgba(109,40,217,0.06), rgba(6,182,212,0.02));
+      /* base color using --card (#D2C081) with a light gradient for depth */
+      background-color: var(--card);
+      background-image: linear-gradient(180deg, rgba(210,192,129,0.10), rgba(210,192,129,0.04));
+      background-blend-mode: normal;
       border-radius:12px;
       display:flex;
       flex-direction:column;
@@ -80,7 +84,7 @@
     /* chip variants */
     .chip { /* default chip color for general chips */ color: var(--accent-1); }
     .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
-    .chip.avail { color: var(--accent-3); } /* availability uses accent-3 */
+    .chip.avail { color: var(--accent-4); } /* availability shown in green */
     /* show a real image if present */
     .avatar img{
       width:100%;
