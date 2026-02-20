@@ -338,8 +338,8 @@
       </div>
 
       <div class="contact" aria-label="Contact information">
-        <!-- Age is computed from DOB below -->
-        <div class="item" data-key="age"><strong class="chip chip-2">Age</strong><span class="muted" data-age aria-live="polite">—</span></div>
+        <!-- Age is hard-coded -->
+        <div class="item" data-key="age"><strong class="chip chip-2">Age</strong><span class="muted">19</span></div>
 
         <!-- Inline values (no external text files) -->
         <div class="item" data-key="dob"><strong class="chip chip-2">DOB</strong>
@@ -367,11 +367,20 @@
         </div>
       </div>
 
+      <!-- Short profile paragraph placed before CricHeroes (moved) -->
+      <section class="card" aria-label="Profile summary" style="margin-top:12px;">
+        <div id="profile-summary" class="profile-summary muted" aria-live="polite">
+          <p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">
+            Cricket has been my passion since the age of 9, shaping not just my skills but my mindset. As a disciplined left-arm leg spinner, I bring consistency, adaptability, and sharp tactical awareness to every match. Known for performing under pressure and adjusting to varying pitch conditions, I aim to contribute match-winning performances and add strategic value to any team I represent.
+          </p>
+        </div>
+      </section>
+
       <!-- Unified CricHeroes — Profiles & Highlights -->
       <section class="card" id="cricheroes-section" aria-labelledby="cricheroes-heading">
         <h3 id="cricheroes-heading" style="margin:0 0 8px 0">CricHeroes — Profiles & Highlights</h3>
         <p class="muted" style="margin:0 0 10px 0;font-size:13px">
-          Two public profiles — click either link to open the profile in a new tab.
+          I have two public profiles. Click a link to view it in a new browser tab.
         </p>
 
         <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
@@ -389,14 +398,12 @@
               <div class="stat" data-stat-for="301505" data-key="wickets"><div class="num">235</div><div class="label">Wickets</div></div>
             </div>
             <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
-            <details>
-              <summary style="cursor:pointer">Recent highlights (expand)</summary>
-              <ul id="highlights-301505" class="achievements" style="margin-top:8px"></ul>
-              <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
-                <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/stats" target="_blank" rel="noopener">Overall statistics</a>
-                <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/awards" target="_blank" rel="noopener">Awards</a>
-              </div>
-            </details>
+
+            <!-- removed 'Recent highlights (expand)' block; keep only the external links -->
+            <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
+              <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/stats" target="_blank" rel="noopener">Overall statistics</a>
+              <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/awards" target="_blank" rel="noopener">Awards</a>
+            </div>
           </div>
 
           <!-- Profile 9476612 -->
@@ -408,62 +415,51 @@
               <div class="stat" data-stat-for="9476612" data-key="wickets"><div class="num">22</div><div class="label">Wickets</div></div>
             </div>
             <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
-            <details>
-              <summary style="cursor:pointer">Recent highlights (expand)</summary>
-              <ul id="highlights-9476612" class="achievements" style="margin-top:8px"></ul>
-              <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
-                <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/stats" target="_blank" rel="noopener">Overall statistics</a>
-                <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/awards" target="_blank" rel="noopener">Awards</a>
-              </div>
-            </details>
+
+            <!-- removed 'Recent highlights (expand)' block; keep only the external links -->
+            <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
+              <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/stats" target="_blank" rel="noopener">Overall statistics</a>
+              <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/awards" target="_blank" rel="noopener">Awards</a>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Short profile paragraph placed directly after CricHeroes (card-styled for alignment) -->
-      <section class="card" aria-label="Profile summary" style="margin-top:12px;">
-        <div id="profile-summary" class="profile-summary muted" aria-live="polite">
-          <p style="margin:0 0 10px;font-size:14px;color:#0b1220;line-height:1.5">
-            Cricket has been my passion since the age of 9, shaping not just my skills but my mindset. As a disciplined left-arm leg spinner, I bring consistency, adaptability, and sharp tactical awareness to every match. Known for performing under pressure and adjusting to varying pitch conditions, I aim to contribute match-winning performances and add strategic value to any team I represent.
-          </p>
+      <!-- Press & Media — Applauses -->
+      <section class="card" id="press-media" aria-labelledby="press-media-heading">
+        <h3 id="press-media-heading" style="margin:0 0 6px 0">Press & Media — Applauses</h3>
+        <p class="muted" style="margin:0 0 10px 0;font-size:13px">Clippings and mentions (PDF).</p>
+        <div class="hl-links" style="margin-top:4px">
+          <a href="https://drive.google.com/file/d/1lAvKMJRQiX6aIbxpC90bUY4mn2c4DoC3/view" target="_blank" rel="noopener">View applauses / newspaper clippings (Google Drive)</a>
         </div>
       </section>
 
-      <!-- Press & Media + Education (placed directly after Match Statistics Highlights) -->
-      <section class="card" id="press-education" aria-label="Press and Education">
-        <div id="press-media" aria-labelledby="press-media-heading" style="margin-bottom:12px">
-          <h3 id="press-media-heading" style="margin:0 0 6px 0">Press & Media — Applauses</h3>
-          <div class="hl-links" style="margin-top:4px">
-            <a href="https://drive.google.com/file/d/1lAvKMJRQiX6aIbxpC90bUY4mn2c4DoC3/view" target="_blank" rel="noopener">View applauses / newspaper clippings (Google Drive)</a>
+      <!-- Education (separate block) -->
+      <section class="card" id="education" aria-labelledby="education-heading" style="margin-top:12px">
+        <h3 id="education-heading" style="margin:0 0 6px 0">Education</h3>
+        <div style="font-size:13px;line-height:1.3;display:flex;flex-direction:column;gap:10px;margin-top:6px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+            <div>
+              <div style="font-weight:600">Maharaja Sayajirao University of Baroda, Vadodara, Gujarat</div>
+              <div class="muted" style="font-size:12px">B.Com — 2nd year</div>
+            </div>
+            <div class="muted" style="font-size:12px;text-align:right">Ongoing</div>
           </div>
-        </div>
 
-        <div id="education" aria-labelledby="education-heading">
-          <h3 id="education-heading" style="margin:0 0 6px 0">Education</h3>
-          <div style="font-size:13px;line-height:1.3;display:flex;flex-direction:column;gap:10px;margin-top:6px">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-              <div>
-                <div style="font-weight:600">Maharaja Sayajirao University of Baroda, Vadodara, Gujarat</div>
-                <div class="muted" style="font-size:12px">B.Com — 2nd year</div>
-              </div>
-              <div class="muted" style="font-size:12px;text-align:right">Ongoing</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+            <div>
+              <div style="font-weight:600">Divan Ballubhai Madhyamkik Shala, Ahmedabad, Gujarat</div>
+              <div class="muted" style="font-size:12px">HSC</div>
             </div>
+            <div class="muted" style="font-size:12px;text-align:right">Jun 2022 – May 2023<br>78%</div>
+          </div>
 
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-              <div>
-                <div style="font-weight:600">Divan Ballubhai Madhyamkik Shala, Ahmedabad, Gujarat</div>
-                <div class="muted" style="font-size:12px">HSC</div>
-              </div>
-              <div class="muted" style="font-size:12px;text-align:right">Jun 2022 – May 2023<br>78%</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+            <div>
+              <div style="font-weight:600">Divan Ballubhai Madhyamkik Shala, Ahmedabad, Gujarat</div>
+              <div class="muted" style="font-size:12px">SSC</div>
             </div>
-
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-              <div>
-                <div style="font-weight:600">Divan Ballubhai Madhyamkik Shala, Ahmedabad, Gujarat</div>
-                <div class="muted" style="font-size:12px">SSC</div>
-              </div>
-              <div class="muted" style="font-size:12px;text-align:right">Jun 2021 – May 2022<br>72%</div>
-            </div>
+            <div class="muted" style="font-size:12px;text-align:right">Jun 2021 – May 2022<br>72%</div>
           </div>
         </div>
       </section>
