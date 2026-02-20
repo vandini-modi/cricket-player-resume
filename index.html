@@ -310,12 +310,17 @@
       <div class="contact" aria-label="Contact information">
         <!-- Age is computed from DOB below -->
         <div class="item" data-key="age"><strong class="chip chip-2">Age</strong><span class="muted" data-age aria-live="polite">—</span></div>
-        <!-- Each item can point to an asset file; script.js will fetch and populate -->
-        <div class="item" data-key="dob" data-file="assets/dob.txt"><strong class="chip chip-2">DOB</strong><span class="muted" data-dob>—</span></div>
-        <div class="item" data-key="location" data-file="assets/location.txt"><strong class="chip">Location</strong><span class="muted">—</span></div>
-        <div class="item" data-key="phone" data-file="assets/phone.txt"><strong class="chip">Phone</strong><span class="muted">—</span></div>
-        <div class="item" data-key="email" data-file="assets/email.txt"><strong class="chip">Email</strong><span class="muted">—</span></div>
-        <div class="item" data-key="languages" data-file="assets/languages.txt"><strong class="chip">Languages</strong><span class="muted">—</span></div>
+
+        <!-- Inline values (no external text files) -->
+        <div class="item" data-key="dob"><strong class="chip chip-2">DOB</strong>
+          <!-- data-dob should be ISO (YYYY-MM-DD) or any parseable date; visible text is user-friendly -->
+          <span class="muted" data-dob="2004-02-12">12 Feb 2004</span>
+        </div>
+
+        <div class="item" data-key="location"><strong class="chip">Location</strong><span class="muted">Ahmedabad, Gujarat, India</span></div>
+        <div class="item" data-key="phone"><strong class="chip">Phone</strong><span class="muted">+91 98765 43210</span></div>
+        <div class="item" data-key="email"><strong class="chip">Email</strong><span class="muted">dhyey@example.com</span></div>
+        <div class="item" data-key="languages"><strong class="chip">Languages</strong><span class="muted">English, Gujarati, Hindi</span></div>
       </div>
     </aside>
 
