@@ -287,6 +287,36 @@
       body{background:white}
       .container{box-shadow:none}
     }
+
+    /* clickable profile link chips (clear hover / focus) */
+    .link-chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.98);
+      color:var(--accent-1);
+      font-weight:600;
+      text-decoration:none;
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+      transition:transform .14s ease, background .12s ease, color .12s ease;
+      border:1px solid rgba(15,23,42,0.03);
+    }
+    .link-chip svg{width:14px;height:14px;opacity:.9}
+    .link-chip:hover{
+      text-decoration:underline;
+      color:var(--accent-2);
+      transform:translateY(-3px);
+      cursor:pointer;
+      background:linear-gradient(90deg, rgba(53,202,254,0.04), rgba(7,139,220,0.02));
+    }
+    .link-chip:focus-visible{outline:3px solid rgba(7,139,220,0.14); outline-offset:4px; border-radius:10px}
+    .link-chip.primary{ background:var(--accent-1); color:white; box-shadow:0 10px 26px rgba(7,139,220,0.12) }
+    .link-chip.primary:hover{ filter:brightness(.98); transform:translateY(-2px) }
+
+    /* improve small-note visibility */
+    .muted.tip{ font-size:13px; margin-top:6px; color:var(--muted) }
   </style>
 
 </head>
@@ -337,25 +367,54 @@
         </div>
       </div>
 
-      <!-- CricHeroes quick access (placed before Profile) -->
-      <section class="card" id="cricheroes" aria-labelledby="cricheroes-heading">
-        <h3 id="cricheroes-heading" style="margin:0 0 8px 0">CricHeroes — Profiles</h3>
+      <!-- Unified CricHeroes — Profiles & Highlights -->
+      <section class="card" id="cricheroes-section" aria-labelledby="cricheroes-heading">
+        <h3 id="cricheroes-heading" style="margin:0 0 8px 0">CricHeroes — Profiles & Highlights</h3>
         <p class="muted" style="margin:0 0 10px 0;font-size:13px">
-          Two public profiles are available. Click a button to preview (embedding may be blocked); use "Open in new tab" to view directly.
+          Two public profiles — open in a new tab and compare quick stats below.
         </p>
 
         <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
-          <button class="chip" id="profile-btn-301505" data-url="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/">Profile (301505)</button>
-          <button class="chip" id="profile-btn-9476612" data-url="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/">Profile (9476612)</button>
-          <a id="open-external" class="chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/" target="_blank" rel="noopener">Open in new tab</a>
+          <a class="link-chip" id="link-301505" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/" target="_blank" rel="noopener" data-id="301505">Profile (301505)</a>
+          <a class="link-chip" id="link-9476612" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/" target="_blank" rel="noopener" data-id="9476612">Profile (9476612)</a>
+          <button class="link-chip primary" id="open-selected" aria-label="Open selected profile in new tab">Open selected profile</button>
         </div>
 
-        <div id="profile-frame-wrap" style="border-radius:8px;overflow:hidden;background:var(--glass);">
-          <iframe id="profile-frame" src="" title="Selected CricHeroes profile" style="width:100%;height:420px;border:0" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+        <div class="muted tip">Tip: links open in a new tab (right-click / long-press). Click a profile chip to set the selected profile, then use "Open selected profile".</div>
+
+        <div class="highlights" role="region" aria-label="Profiles comparison" style="margin-top:12px;grid-template-columns: 1fr 1fr;">
+          <!-- Profile 301505 -->
+          <div class="hl-card" aria-labelledby="profile-301505-title">
+            <h4 id="profile-301505-title">Profile (301505)</h4>
+            <div style="display:flex;gap:12px;margin:8px 0 12px 0;flex-wrap:wrap">
+              <div class="stat" data-stat-for="301505" data-key="matches"><div class="num">—</div><div class="label">Matches</div></div>
+              <div class="stat" data-stat-for="301505" data-key="runs"><div class="num">—</div><div class="label">Runs</div></div>
+              <div class="stat" data-stat-for="301505" data-key="wickets"><div class="num">—</div><div class="label">Wickets</div></div>
+            </div>
+            <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
+            <details>
+              <summary style="cursor:pointer">Recent highlights (expand)</summary>
+              <ul id="highlights-301505" class="achievements" style="margin-top:8px"></ul>
+              <div style="margin-top:8px"><a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/" target="_blank" rel="noopener">Open full profile on CricHeroes</a></div>
+            </details>
+          </div>
+
+          <!-- Profile 9476612 -->
+          <div class="hl-card" aria-labelledby="profile-9476612-title">
+            <h4 id="profile-9476612-title">Profile (9476612)</h4>
+            <div style="display:flex;gap:12px;margin:8px 0 12px 0;flex-wrap:wrap">
+              <div class="stat" data-stat-for="9476612" data-key="matches"><div class="num">—</div><div class="label">Matches</div></div>
+              <div class="stat" data-stat-for="9476612" data-key="runs"><div class="num">—</div><div class="label">Runs</div></div>
+              <div class="stat" data-stat-for="9476612" data-key="wickets"><div class="num">—</div><div class="label">Wickets</div></div>
+            </div>
+            <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
+            <details>
+              <summary style="cursor:pointer">Recent highlights (expand)</summary>
+              <ul id="highlights-9476612" class="achievements" style="margin-top:8px"></ul>
+              <div style="margin-top:8px"><a href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/" target="_blank" rel="noopener">Open full profile on CricHeroes</a></div>
+            </details>
+          </div>
         </div>
-        <p class="muted" id="iframe-warning" style="margin-top:8px;display:none;font-size:13px">
-          Embedding may be blocked by the site. Use "Open in new tab" if the preview doesn't load.
-        </p>
       </section>
 
       <!-- Short profile paragraph placed directly after CricHeroes (card-styled for alignment) -->
@@ -395,36 +454,6 @@
           </div>
 
           <div class="hl-card" aria-labelledby="awards-badges">
-            <h4 id="awards-badges">Awards & Badges</h4>
-            <p class="muted" style="margin:0 0 10px;font-size:13px">Track awards progress and earned badges on the CricHeroes profile page.</p>
-            <div class="hl-links">
-              <a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/awards" target="_blank" rel="noopener">Awards progress</a>
-              <a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/badges" target="_blank" rel="noopener">Badges</a>
-            </div>
-          </div>
-        </div>
-      </section> <!-- Match Statistics Highlights -->
-
-      <!-- Press & Media (separate card) -->
-      <section class="card" id="press-media" aria-labelledby="press-media-heading">
-        <h3 id="press-media-heading" style="margin:0 0 6px 0">Press & Media — Applauses</h3>
-        <div class="hl-links" style="margin-top:8px">
-          <a href="https://drive.google.com/file/d/1lAvKMJRQiX6aIbxpC90bUY4mn2c4DoC3/view" target="_blank" rel="noopener">View applauses / newspaper clippings (Google Drive)</a>
-        </div>
-      </section>
-
-      <!-- Education (separate card) -->
-      <section class="card" id="education" aria-labelledby="education-heading">
-        <h3 id="education-heading" style="margin:0 0 6px 0">Education</h3>
-        <div style="font-size:13px;line-height:1.3;display:flex;flex-direction:column;gap:10px;margin-top:6px">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-            <div>
-              <div style="font-weight:600">Maharaja Sayajirao University of Baroda, Vadodara, Gujarat</div>
-              <div class="muted" style="font-size:12px">B.Com — 2nd year</div>
-            </div>
-            <div class="muted" style="font-size:12px;text-align:right">Ongoing</div>
-          </div>
-
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
             <div>
               <div style="font-weight:600">Divan Ballubhai Madhyamkik Shala, Ahmedabad, Gujarat</div>
@@ -475,11 +504,7 @@
 
             <details>
               <summary style="cursor:pointer">Recent highlights (expand)</summary>
-              <ul class="achievements" style="margin-top:8px">
-                <li><div class="badge">1</div><div class="ach-text">50* vs Team X — 10 Apr 2025</div></li>
-                <li><div class="badge">2</div><div class="ach-text">5/28 vs Team Y — 20 Mar 2025</div></li>
-                <li><div class="badge">3</div><div class="ach-text">Man of the Match — 02 Feb 2025</div></li>
-              </ul>
+              <ul id="highlights-301505" class="achievements" style="margin-top:8px"></ul>
               <div style="margin-top:8px"><a href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/" target="_blank" rel="noopener">Open full profile on CricHeroes</a></div>
             </details>
           </div>
@@ -507,11 +532,7 @@
 
             <details>
               <summary style="cursor:pointer">Recent highlights (expand)</summary>
-              <ul class="achievements" style="margin-top:8px">
-                <li><div class="badge">A</div><div class="ach-text">42 vs Team A — 05 Jan 2024</div></li>
-                <li><div class="badge">B</div><div class="ach-text">3/18 vs Team B — 22 Dec 2023</div></li>
-                <li><div class="badge">C</div><div class="ach-text">Player of the Series — Club C</div></li>
-              </ul>
+              <ul id="highlights-9476612" class="achievements" style="margin-top:8px"></ul>
               <div style="margin-top:8px"><a href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/" target="_blank" rel="noopener">Open full profile on CricHeroes</a></div>
             </details>
           </div>
