@@ -124,9 +124,53 @@ document.addEventListener('keydown', (event) => {
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-  document.addEventListener('DOMContentLoaded', ()=>{
-    initContactFromAssets().catch(e=>console.warn('initContactFromAssets', e));
-    loadProfileText().catch(e=>console.warn('loadProfileText', e));
+  document.addEventListener('DOMContentLoaded', () => {
+    const dobEl = document.querySelector('[data-dob]');
+    const ageEl = document.querySelector('[data-age]');
+
+    if (!dobEl || !ageEl) return;
+
+    const raw = dobEl.dataset.dob?.trim() || dobEl.textContent.trim();
+    const dob = parseDateFlexible(raw);
+    if (!dob) return;
+
+    ageEl.textContent = calculateAge(dob);
+
+    // helper: return age in years (e.g. "22")
+    function calculateAge(d) {
+      const now = new Date();
+      let years = now.getFullYear() - d.getFullYear();
+      const m = now.getMonth() - d.getMonth();
+      if (m < 0 || (m === 0 && now.getDate() < d.getDate())) years--;
+      return String(years);
+    }
+
+    // helper: try flexible parsing (ISO preferred)
+    function parseDateFlexible(input) {
+      if (!input) return null;
+      // try ISO first
+      const iso = new Date(input);
+      if (!Number.isNaN(iso.getTime())) return iso;
+      // try dd MMM YYYY (e.g. "12 Feb 2004")
+      const parts = input.split(/[\s\-\.\/]+/);
+      if (parts.length >= 3) {
+        // attempt reorder if looks like dd MMM yyyy
+        const day = parseInt(parts[0], 10);
+        const month = monthIndex(parts[1]);
+        const year = parseInt(parts[2], 10);
+        if (!Number.isNaN(day) && month >= 0 && !Number.isNaN(year)) {
+          return new Date(year, month, day);
+        }
+      }
+      return null;
+    }
+
+    function monthIndex(token) {
+      if (!token) return -1;
+      const m = token.toLowerCase().slice(0,3);
+      const map = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+      return map.indexOf(m);
+    }
   });
 
   // inject spinner keyframes if missing
