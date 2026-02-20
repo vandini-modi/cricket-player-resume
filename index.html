@@ -195,6 +195,23 @@
       box-shadow: 0 6px 18px rgba(6,10,30,0.04);
     }
     .hl-card h4{margin:0 0 8px 0;font-size:14px;color:#0b1220}
+    .hl-card h4.profile-accent {
+      color: #F5895A;
+      font-weight:700;
+      font-size:15px;
+      letter-spacing:0.2px;
+    }
+    .hl-card h4.profile-accent::before{
+      content: '';
+      display:inline-block;
+      width:10px;
+      height:10px;
+      margin-right:8px;
+      vertical-align:middle;
+      border-radius:50%;
+      background:#F5895A;
+      box-shadow: 0 6px 18px rgba(245,137,90,0.12);
+    }
     .hl-links a{display:inline-block;margin-right:10px;color:var(--accent-1);font-weight:600;text-decoration:none}
     .hl-links a:hover{text-decoration:underline}
 
@@ -321,8 +338,27 @@
     /* improve small-note visibility */
     .muted.tip{ font-size:13px; margin-top:6px; color:var(--muted) }
 
-    /* accent headings for individual profiles */
-    .profile-accent { color: var(--accent-3); font-weight:700; }
+    /* profile headings: orange accent, dot marker and stronger weight */
+    .hl-card h4.profile-accent {
+      color: #F5895A;
+      font-weight:700;
+      font-size:15px;
+      letter-spacing:0.2px;
+    }
+    .hl-card h4.profile-accent::before{
+      content: '';
+      display:inline-block;
+      width:10px;
+      height:10px;
+      margin-right:8px;
+      vertical-align:middle;
+      border-radius:50%;
+      background:#F5895A;
+      box-shadow: 0 6px 18px rgba(245,137,90,0.12);
+    }
+    .hl-card + .hl-card{ /* small gap visual for the second card */
+      margin-left:0;
+    }
   </style>
 </head>
 <body>
