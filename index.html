@@ -339,10 +339,23 @@
 
       <!-- CricHeroes quick access (placed before Profile) -->
       <section class="card" id="cricheroes" aria-labelledby="cricheroes-heading">
-        <h3 id="cricheroes-heading" style="margin:0 0 12px 0">CricHeroes — Full Profile</h3>
-        <div class="hl-links">
-          <a href="https://cricheroes.com/player-profile/301505/dhyey-parag-modi/matches" target="_blank" rel="noopener">View my profile on cricheroes</a>
+        <h3 id="cricheroes-heading" style="margin:0 0 8px 0">CricHeroes — Profiles</h3>
+        <p class="muted" style="margin:0 0 10px 0;font-size:13px">
+          Two public profiles are available. Click a button to preview (embedding may be blocked); use "Open in new tab" to view directly.
+        </p>
+
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+          <button class="chip" id="profile-btn-301505" data-url="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/">Profile (301505)</button>
+          <button class="chip" id="profile-btn-9476612" data-url="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/">Profile (9476612)</button>
+          <a id="open-external" class="chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/" target="_blank" rel="noopener">Open in new tab</a>
         </div>
+
+        <div id="profile-frame-wrap" style="border-radius:8px;overflow:hidden;background:var(--glass);">
+          <iframe id="profile-frame" src="" title="Selected CricHeroes profile" style="width:100%;height:420px;border:0" sandbox="allow-forms allow-scripts allow-same-origin allow-popups"></iframe>
+        </div>
+        <p class="muted" id="iframe-warning" style="margin-top:8px;display:none;font-size:13px">
+          Embedding may be blocked by the site. Use "Open in new tab" if the preview doesn't load.
+        </p>
       </section>
 
       <!-- Short profile paragraph placed directly after CricHeroes (card-styled for alignment) -->
