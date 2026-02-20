@@ -125,17 +125,17 @@ document.addEventListener('keydown', (event) => {
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
   document.addEventListener('DOMContentLoaded', () => {
-  // Local profile data (use the numbers you provided)
+  // Local profile data (no hard-coded highlights)
   const profilesData = {
     "301505": {
       url: "https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/",
       stats: { matches: 140, runs: 1631, wickets: 235 },
-      highlights: [] // keep empty (no hard-coded highlights)
+      highlights: [] // intentionally empty
     },
     "9476612": {
       url: "https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/",
       stats: { matches: 8, runs: 284, wickets: 22 },
-      highlights: [] // keep empty
+      highlights: [] // intentionally empty
     }
   };
 
@@ -150,11 +150,10 @@ document.addEventListener('keydown', (event) => {
     });
   });
 
-  // Update the top summary cards to reflect primary profile (301505)
+  // Ensure the top summary cards reflect primary profile (301505)
   const primary = profilesData['301505'];
   if (primary) {
     const summaryNums = document.querySelectorAll('.cards .stat .num');
-    // order in HTML is Matches, Wickets, Runs — map accordingly
     if (summaryNums && summaryNums.length >= 3) {
       summaryNums[0].textContent = primary.stats.matches;
       summaryNums[1].textContent = primary.stats.wickets;
@@ -162,33 +161,22 @@ document.addEventListener('keydown', (event) => {
     }
   }
 
-  // Hook up profile link-chips and primary open button
-  const chips = document.querySelectorAll('.link-chip[data-id]');
-  const openBtn = document.getElementById('open-selected');
-  let selectedId = '301505';
+  // Render empty highlights (no placeholders)
+  Object.keys(profilesData).forEach(id => {
+    const ul = document.getElementById(`highlights-${id}`);
+    if (!ul) return;
+    ul.innerHTML = ''; // keep empty; fill later or via external JSON if needed
+  });
 
-  function setSelected(id){
-    selectedId = id;
-    chips.forEach(c => c.classList.toggle('active', c.dataset.id === id));
-    openBtn.dataset.url = profilesData[id]?.url || '';
-  }
-
-  chips.forEach(ch => {
-    ch.addEventListener('click', (e) => {
-      const id = ch.dataset.id;
-      setSelected(id);
+  // Make link-chips focus/active visible (optional visual)
+  document.querySelectorAll('.link-chip[data-id]').forEach(ch => {
+    ch.addEventListener('click', () => {
+      document.querySelectorAll('.link-chip[data-id]').forEach(x => x.classList.remove('active'));
+      ch.classList.add('active');
     });
   });
 
-  openBtn.addEventListener('click', () => {
-    const url = openBtn.dataset.url || profilesData[selectedId]?.url;
-    if (url) window.open(url, '_blank', 'noopener');
-  });
-
-  // initialize selection
-  setSelected(selectedId);
-
-  // expose data for quick updates via console if needed
+  // expose data for console edits
   window.__profilesData = profilesData;
 });
 
