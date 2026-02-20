@@ -125,82 +125,72 @@ document.addEventListener('keydown', (event) => {
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // --- Age from inline DOB ---
-    const dobEl = document.querySelector('[data-dob]');
-    const ageEl = document.querySelector('[data-age]');
-    if (dobEl && ageEl) {
-      const raw = dobEl.dataset.dob?.trim() || dobEl.textContent.trim();
-      const dob = parseDateFlexible(raw);
-      if (dob) ageEl.textContent = calculateAge(dob);
+  // Local profile data (use the numbers you provided)
+  const profilesData = {
+    "301505": {
+      url: "https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/",
+      stats: { matches: 140, runs: 1631, wickets: 235 },
+      highlights: [] // keep empty (no hard-coded highlights)
+    },
+    "9476612": {
+      url: "https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/",
+      stats: { matches: 8, runs: 284, wickets: 22 },
+      highlights: [] // keep empty
     }
+  };
 
-    // --- CricHeroes profile switcher ---
-    const frame = document.getElementById('profile-frame');
-    const openExternal = document.getElementById('open-external');
-    const warning = document.getElementById('iframe-warning');
-    const buttons = document.querySelectorAll('#profile-btn-301505, #profile-btn-9476612');
-
-    const defaultUrl = 'https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/';
-    function setProfile(url) {
-      if (!frame) return;
-      warning.style.display = 'none';
-      frame.src = url;
-      openExternal.href = url;
-
-      // simple heuristic: if iframe stayed empty after 1.5s, show fallback warning
-      clearTimeout(frame._embedTimer);
-      frame._embedTimer = setTimeout(() => {
-        try {
-          // if same-origin, we could inspect content; for cross-origin just test if src is non-empty and hope it's visible
-          if (!frame || !frame.src) throw 1;
-          // if the embed fails silently, show note (best-effort)
-          // show the warning — user can open in new tab
-          warning.style.display = 'block';
-        } catch (e) {
-          warning.style.display = 'block';
-        }
-      }, 1500);
-
-      // active styling
-      buttons.forEach(b => b.classList.toggle('active', b.dataset.url === url));
-    }
-
-    buttons.forEach(b => b.addEventListener('click', () => setProfile(b.dataset.url)));
-    // initialize
-    setProfile(defaultUrl);
-
-    // --- Helpers: parse DOB and calculate age ---
-    function calculateAge(d) {
-      const now = new Date();
-      let years = now.getFullYear() - d.getFullYear();
-      const m = now.getMonth() - d.getMonth();
-      if (m < 0 || (m === 0 && now.getDate() < d.getDate())) years--;
-      return String(years);
-    }
-
-    function parseDateFlexible(input) {
-      if (!input) return null;
-      const iso = new Date(input);
-      if (!Number.isNaN(iso.getTime())) return iso;
-      const parts = input.split(/[\s\-\.\/]+/);
-      if (parts.length >= 3) {
-        const day = parseInt(parts[0], 10);
-        const month = monthIndex(parts[1]);
-        const year = parseInt(parts[2], 10);
-        if (!Number.isNaN(day) && month >= 0 && !Number.isNaN(year)) {
-          return new Date(year, month, day);
-        }
-      }
-      return null;
-    }
-
-    function monthIndex(token) {
-      if (!token) return -1;
-      const m = token.toLowerCase().slice(0,3);
-      const map = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
-      return map.indexOf(m);
-    }
+  // Fill the per-profile stat cards
+  Object.keys(profilesData).forEach(id => {
+    const p = profilesData[id];
+    document.querySelectorAll(`.stat[data-stat-for="${id}"]`).forEach(el => {
+      const key = el.dataset.key;
+      const val = (p.stats && p.stats[key] != null) ? p.stats[key] : '—';
+      const num = el.querySelector('.num');
+      if (num) num.textContent = val;
+    });
   });
+
+  // Update the top summary cards to reflect primary profile (301505)
+  const primary = profilesData['301505'];
+  if (primary) {
+    const summaryNums = document.querySelectorAll('.cards .stat .num');
+    // order in HTML is Matches, Wickets, Runs — map accordingly
+    if (summaryNums && summaryNums.length >= 3) {
+      summaryNums[0].textContent = primary.stats.matches;
+      summaryNums[1].textContent = primary.stats.wickets;
+      summaryNums[2].textContent = primary.stats.runs;
+    }
+  }
+
+  // Hook up profile link-chips and primary open button
+  const chips = document.querySelectorAll('.link-chip[data-id]');
+  const openBtn = document.getElementById('open-selected');
+  let selectedId = '301505';
+
+  function setSelected(id){
+    selectedId = id;
+    chips.forEach(c => c.classList.toggle('active', c.dataset.id === id));
+    openBtn.dataset.url = profilesData[id]?.url || '';
+  }
+
+  chips.forEach(ch => {
+    ch.addEventListener('click', (e) => {
+      const id = ch.dataset.id;
+      setSelected(id);
+    });
+  });
+
+  openBtn.addEventListener('click', () => {
+    const url = openBtn.dataset.url || profilesData[selectedId]?.url;
+    if (url) window.open(url, '_blank', 'noopener');
+  });
+
+  // initialize selection
+  setSelected(selectedId);
+
+  // expose data for quick updates via console if needed
+  window.__profilesData = profilesData;
+});
 
   // inject spinner keyframes if missing
   (function injectSpin(){
