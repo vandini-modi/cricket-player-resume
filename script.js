@@ -125,18 +125,51 @@ document.addEventListener('keydown', (event) => {
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
   document.addEventListener('DOMContentLoaded', () => {
+    // --- Age from inline DOB ---
     const dobEl = document.querySelector('[data-dob]');
     const ageEl = document.querySelector('[data-age]');
+    if (dobEl && ageEl) {
+      const raw = dobEl.dataset.dob?.trim() || dobEl.textContent.trim();
+      const dob = parseDateFlexible(raw);
+      if (dob) ageEl.textContent = calculateAge(dob);
+    }
 
-    if (!dobEl || !ageEl) return;
+    // --- CricHeroes profile switcher ---
+    const frame = document.getElementById('profile-frame');
+    const openExternal = document.getElementById('open-external');
+    const warning = document.getElementById('iframe-warning');
+    const buttons = document.querySelectorAll('#profile-btn-301505, #profile-btn-9476612');
 
-    const raw = dobEl.dataset.dob?.trim() || dobEl.textContent.trim();
-    const dob = parseDateFlexible(raw);
-    if (!dob) return;
+    const defaultUrl = 'https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/';
+    function setProfile(url) {
+      if (!frame) return;
+      warning.style.display = 'none';
+      frame.src = url;
+      openExternal.href = url;
 
-    ageEl.textContent = calculateAge(dob);
+      // simple heuristic: if iframe stayed empty after 1.5s, show fallback warning
+      clearTimeout(frame._embedTimer);
+      frame._embedTimer = setTimeout(() => {
+        try {
+          // if same-origin, we could inspect content; for cross-origin just test if src is non-empty and hope it's visible
+          if (!frame || !frame.src) throw 1;
+          // if the embed fails silently, show note (best-effort)
+          // show the warning — user can open in new tab
+          warning.style.display = 'block';
+        } catch (e) {
+          warning.style.display = 'block';
+        }
+      }, 1500);
 
-    // helper: return age in years (e.g. "22")
+      // active styling
+      buttons.forEach(b => b.classList.toggle('active', b.dataset.url === url));
+    }
+
+    buttons.forEach(b => b.addEventListener('click', () => setProfile(b.dataset.url)));
+    // initialize
+    setProfile(defaultUrl);
+
+    // --- Helpers: parse DOB and calculate age ---
     function calculateAge(d) {
       const now = new Date();
       let years = now.getFullYear() - d.getFullYear();
@@ -145,16 +178,12 @@ document.addEventListener('keydown', (event) => {
       return String(years);
     }
 
-    // helper: try flexible parsing (ISO preferred)
     function parseDateFlexible(input) {
       if (!input) return null;
-      // try ISO first
       const iso = new Date(input);
       if (!Number.isNaN(iso.getTime())) return iso;
-      // try dd MMM YYYY (e.g. "12 Feb 2004")
       const parts = input.split(/[\s\-\.\/]+/);
       if (parts.length >= 3) {
-        // attempt reorder if looks like dd MMM yyyy
         const day = parseInt(parts[0], 10);
         const month = monthIndex(parts[1]);
         const year = parseInt(parts[2], 10);
