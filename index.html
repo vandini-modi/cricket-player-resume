@@ -15,6 +15,7 @@
       --accent-1:#35CAFE; /* Highlighter Blue */
       --accent-2:#078BDC; /* Blue Ball */
       --accent-3:#F5895A; /* Saffron */
+      --accent-4:#138808; /* Availability green */
       --muted:#6b7280;
       --glass: rgba(255,255,255,0.7);
       --radius:14px;
@@ -82,10 +83,10 @@
     .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
     /* make the "Available" chip green (#138808) with white text */
     .chip.avail {
-      background: #138808;
-      color: #ffffff;
-      box-shadow: 0 6px 18px rgba(19,136,8,0.16);
-      border: 1px solid rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.7); /* match default chip background */
+      color: var(--accent-4); /* green text via accent-4 */
+      box-shadow: 0 4px 10px rgba(16,24,40,0.04); /* subtle shadow like .chip */
+      border: 1px solid rgba(15,23,42,0.03);
     }
     /* show a real image if present */
     .avatar img{
