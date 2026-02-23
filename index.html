@@ -18,7 +18,6 @@
       --muted:#6b7280;
       --glass: rgba(255,255,255,0.7);
       --radius:14px;
-      --available: #53A77A; /* added: green for Availability */
     }
     *{box-sizing:border-box}
     body{
@@ -77,74 +76,179 @@
       font-size:28px;
       box-shadow: 0 6px 18px rgba(109,40,217,0.16), inset 0 -6px 18px rgba(255,255,255,0.06);
       flex-shrink:0;
-      overflow:hidden; /* prevent large image from overflowing container */
     }
-
-    /* constrain avatar image to the circle and cover the area */
-    .avatar img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      border-radius:50%;
-    }
-
-    /* general safety: prevent any other images from stretching the layout */
-    img {
-      max-width:100%;
-      height:auto;
-      display:block;
-    }
-
     /* chip variants */
     .chip { /* default chip color for general chips */ color: var(--accent-1); }
     .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
-    /* make 'Available' a green text-only pill (no green background) */
-    .chip.avail {
-      color: var(--available);
-      /* use the default chip background instead of green */
-      background: rgba(255,255,255,0.7);
-      /* match default chip shadow so it doesn't stand out as a colored pill */
-      box-shadow: 0 4px 10px rgba(16,24,40,0.04);
-      border: 1px solid rgba(83,167,122,0.10); /* optional subtle green outline */
+    .chip.avail { color: var(--accent-3); } /* availability uses accent-3 */
+    /* show a real image if present */
+    .avatar img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      object-fit:cover;
+      display:block;
+    }
+    .name{
+      display:flex;
+      flex-direction:column;
+    }
+    .name h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:0.2px;
+    }
+    .name p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:13px;
     }
 
-    /* WhatsApp button — compact, icon + label */
-    .whatsapp-btn{
-      display:inline-flex;
-      align-items:center;
+    .contact{
+      display:flex;
+      flex-direction:column;
       gap:8px;
-      padding:6px 10px;
+      font-size:13px;
+      color:var(--muted);
+    }
+    .contact .item{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:rgba(255,255,255,0.7);
+      padding:8px 10px;
       border-radius:999px;
-      background: linear-gradient(90deg,#25D366,#1BA851);
-      color:#fff;
-      font-weight:700;
-      text-decoration:none;
-      box-shadow: 0 8px 22px rgba(37,211,102,0.12);
-      border:none;
-      vertical-align:middle;
-      transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-      margin-left:8px;
-    }
-    .whatsapp-btn svg{width:16px;height:16px;flex:0 0 16px}
-    .whatsapp-btn:hover{transform:translateY(-2px); box-shadow:0 14px 32px rgba(37,211,102,0.14); opacity:0.98}
-    .whatsapp-btn:active{transform:translateY(0)}
-    .whatsapp-btn .label{font-size:13px;line-height:1}
-
-    /* Print: make WhatsApp appear non-interactive and avoid adding URL text */
-    @media print{
-      .whatsapp-btn{
-        background:none !important;
-        box-shadow:none !important;
-        color:inherit !important;
-        padding:0 !important;
-        margin-left:6px !important;
-      }
-      .whatsapp-btn .label{color:inherit !important}
-      /* Ensure browsers do not append raw URLs */
-      a[href]:after { content: none !important; }
+      font-weight:600;
+      color:var(--accent-1);
+      width:fit-content;
+      box-shadow: 0 4px 10px rgba(16,24,40,0.04);
     }
 
+    /* Skills */
+    .skills{display:flex;flex-direction:column;gap:10px}
+    .skill{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .skill .label{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+    .bar{
+      height:10px;
+      background:linear-gradient(90deg, rgba(15,23,42,0.06), rgba(15,23,42,0.04));
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .bar > span{
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      border-radius:999px;
+      transition:width 700ms cubic-bezier(.2,.9,.3,1);
+    }
+
+    /* MAIN */
+    .main{
+      padding:22px;
+    }
+    .header-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    .title{
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .title h2{margin:0;font-size:18px;color:#0b1220}
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+    /* Match highlights */
+    .highlights{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+    .hl-card{
+      padding:12px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), var(--glass));
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+    }
+    .hl-card h4{margin:0 0 8px 0;font-size:14px;color:#0b1220}
+    .hl-links a{display:inline-block;margin-right:10px;color:var(--accent-1);font-weight:600;text-decoration:none}
+    .hl-links a:hover{text-decoration:underline}
+
+    .stat{
+      background:linear-gradient(180deg, rgba(255,255,255,0.8), var(--glass));
+      padding:12px;
+      border-radius:12px;
+      text-align:center;
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+    }
+    .stat .num{font-size:20px;font-weight:700;color:var(--accent-1)}
+    .stat .label{font-size:12px;color:var(--muted)}
+
+    section.card{
+      margin-top:18px;
+      padding:16px;
+      border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98));
+      box-shadow: 0 8px 26px rgba(11,20,40,0.03);
+    }
+
+    /* Achievements */
+    ul.achievements{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    ul.achievements li{
+      display:flex;gap:12px;align-items:flex-start;padding:8px;border-radius:8px;
+      transition:background 180ms;
+    }
+    ul.achievements li:hover{background:rgba(6,182,212,0.03)}
+    .badge{
+      min-width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,var(--accent-2),var(--accent-1));
+      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
+      box-shadow: 0 6px 16px rgba(6,182,212,0.08);
+      flex-shrink:0;
+    }
+    .ach-text{font-size:14px;color:#0b1220}
+
+    /* Performance table */
+    table.stats-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+    }
+    table.stats-table th, table.stats-table td{
+      padding:10px 12px;
+      text-align:left;
+      border-bottom:1px dashed rgba(15,23,42,0.06);
+    }
+    table.stats-table th{
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+    }
+    .best{font-weight:700;color:var(--accent-1)}
+    .muted{color:var(--muted)}
+
+    /* UX / Micro-interactions */
+    html{scroll-behavior:smooth}
     .container{max-width:1100px}
     .card{transition:box-shadow .22s ease, transform .18s ease}
     .card:hover{transform:translateY(-4px); box-shadow:0 18px 40px rgba(6,10,30,0.06)}
@@ -178,101 +282,41 @@
       .avatar{width:72px;height:72px;font-size:24px}
     }
 
-    /* Print-friendly: compact layout, keep links visible, remove big sidebar gap */
+    /* Print-friendly */
     @media print{
-      /* preserve colors */
-      * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
-
-      @page { size: A4 portrait; margin: 6mm; }
-
-      html, body {
-        background: #fff !important;
-        color: #0b1220 !important;
-        font-size: 12px !important;
-        line-height: 1.28 !important;
-      }
-
-      /* page container */
-      .container{
-        max-width:100% !important;
-        margin:0 !important;
-        padding:4mm !important;
-        background:transparent !important;
-        box-shadow:none !important;
-        border-radius:0 !important;
-        display:block !important;
-      }
-
-      /* collapse sidebar so it doesn't create a large top block */
-      .sidebar{
-        display:block !important;
-        width:100% !important;
-        padding:6px 0 !important;
-        background:transparent !important;
-        box-shadow:none !important;
-        border-radius:0 !important;
-        min-height:auto !important;
-        margin-bottom:6px !important;
-      }
-
-      /* tighten profile area */
-      .profile{ gap:10px !important; margin-bottom:6px !important; }
-      .avatar{ width:64px !important; height:64px !important; box-shadow:none !important; }
-      .avatar img{ width:64px !important; height:64px !important; object-fit:cover !important; }
-
-      /* main area */
-      .main{ width:100% !important; padding:0 !important; }
-
-      /* cards: remove heavy visuals and reduce spacing */
-      .card, .hl-card, .stat {
-        box-shadow:none !important;
-        background:transparent !important;
-        border:none !important;
-        padding:8px !important;
-        margin:6px 0 !important;
-      }
-
-      /* chips */
-      .chip, .chip-2 {
-        background:none !important;
-        box-shadow:none !important;
-        border:none !important;
-        padding:0 !important;
-        font-weight:600 !important;
-        color: inherit !important;
-      }
-      .chip.avail {
-        color: var(--available) !important;
-        background:none !important;
-        box-shadow:none !important;
-        border:none !important;
-        padding:0 !important;
-        font-weight:700 !important;
-      }
-
-      /* keep links visible but do not print the raw URL */
-      a[href]:after { content: none !important; }
-      a, .link-chip {
-        color: var(--accent-1) !important;
-        text-decoration: underline !important;
-        font-weight:600 !important;
-      }
-
-      /* WhatsApp button renders as subtle text in print */
-      .whatsapp-btn{
-        background:none !important;
-        box-shadow:none !important;
-        color:var(--accent-1) !important;
-        padding:0 !important;
-        margin-left:6px !important;
-      }
-      .whatsapp-btn .label{ color: inherit !important; }
-
-      /* avoid page breaks and reduce large spacing */
-      h1,h2,h3,h4 { page-break-after: avoid; page-break-inside: avoid; }
-      .card, .hl-card { break-inside: avoid; page-break-inside: avoid; }
-      .header-row{ margin-bottom:6px !important; }
+      body{background:white}
+      .container{box-shadow:none}
     }
+
+    /* clickable profile link chips (clear hover / focus) */
+    .link-chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.98);
+      color:var(--accent-1);
+      font-weight:600;
+      text-decoration:none;
+      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
+      transition:transform .14s ease, background .12s ease, color .12s ease;
+      border:1px solid rgba(15,23,42,0.03);
+    }
+    .link-chip svg{width:14px;height:14px;opacity:.9}
+    .link-chip:hover{
+      text-decoration:underline;
+      color:var(--accent-2);
+      transform:translateY(-3px);
+      cursor:pointer;
+      background:linear-gradient(90deg, rgba(53,202,254,0.04), rgba(7,139,220,0.02));
+    }
+    .link-chip:focus-visible{outline:3px solid rgba(7,139,220,0.14); outline-offset:4px; border-radius:10px}
+    .link-chip.primary{ background:var(--accent-1); color:white; box-shadow:0 10px 26px rgba(7,139,220,0.12) }
+    .link-chip.primary:hover{ filter:brightness(.98); transform:translateY(-2px) }
+
+    /* improve small-note visibility */
+    .muted.tip{ font-size:13px; margin-top:6px; color:var(--muted) }
   </style>
 
 </head>
@@ -304,20 +348,7 @@
         </div>
 
         <div class="item" data-key="location"><strong class="chip">Location</strong><span class="muted">Vadodara, Gujarat, India</span></div>
-        <div class="item" data-key="phone">
-          <strong class="chip">Phone</strong>
-          <!-- clickable phone number -->
-          <a href="tel:+917990035270" class="muted" style="text-decoration:none;color:inherit">+91 79900 35270</a>
-
-          <!-- WhatsApp button (green, icon + label) -->
-          <a class="whatsapp-btn" href="https://wa.me/917990035270" target="_blank" rel="noopener noreferrer" title="Open WhatsApp chat with +91 79900 35270" aria-label="Open WhatsApp chat with +91 79900 35270" role="button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" role="img">
-              <path fill="#fff" d="M20.52 3.48A11.92 11.92 0 0 0 12.06.5 11.95 11.95 0 0 0 .5 12.06c0 2.12.56 4.1 1.62 5.86L.5 23.5l5.68-1.49A11.95 11.95 0 0 0 12.06 23.5 11.92 11.92 0 0 0 20.52 3.48z"/>
-              <path fill="#063A26" d="M17.3 14.1c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15s-.78.98-.96 1.18c-.18.2-.36.22-.66.08-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.76-1.65-2.06-.18-.3-.02-.46.14-.61.14-.14.3-.36.45-.55.15-.2.2-.36.3-.6.1-.24 0-.46-.05-.61-.06-.15-.68-1.62-.93-2.21-.24-.58-.48.5-.66.5-.18 0-.4-.01-.62-.01-.2 0-.54.07-.82.34-.28.28-1.08 1.05-1.08 2.56 0 1.5 1.1 2.96 1.25 3.17.15.2 2.15 3.36 5.2 4.71 3.05 1.35 3.05.9 3.6.84.56-.06 1.78-.73 2.03-1.46.24-.73.24-1.36.17-1.49-.06-.13-.24-.2-.54-.35z"/>
-            </svg>
-            <span class="label">WhatsApp</span>
-          </a>
-        </div>
+        <div class="item" data-key="phone"><strong class="chip">Phone</strong><span class="muted">+91 79900 35270</span></div>
         <div class="item" data-key="email"><strong class="chip">Email</strong><span class="muted">dhyeymodi2411@gmail.com</span></div>
         <div class="item" data-key="languages"><strong class="chip">Languages</strong><span class="muted">Gujarati, Hindi, English</span></div>
       </div>
@@ -333,8 +364,6 @@
 
         <div style="display:flex;gap:10px;align-items:center">
           <div class="chip avail" title="Availability">Available</div>
-          <!-- Download PDF button (hidden in print via CSS) -->
-          <button id="download-pdf" class="link-chip primary download-pdf" style="margin-left:6px" title="Download / Print PDF">Download PDF</button>
         </div>
       </div>
 
@@ -359,7 +388,7 @@
           <a class="link-chip" id="link-9476612" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/" target="_blank" rel="noopener" data-id="9476612">Profile (9476612)</a>
         </div>
 
-        <div class="highlights" role="region" aria-label="Profiles list" style="margin-top:12px; display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+        <div class="highlights" role="region" aria-label="Profiles list" style="margin-top:12px;grid-template-columns: 1fr 1fr;">
           <!-- Profile 301505 -->
           <div class="hl-card" aria-labelledby="profile-301505-title">
             <h4 id="profile-301505-title">Profile (301505)</h4>
@@ -370,6 +399,7 @@
             </div>
             <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
 
+            <!-- removed 'Recent highlights (expand)' block; keep only the external links -->
             <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
               <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/stats" target="_blank" rel="noopener">Overall statistics</a>
               <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/awards" target="_blank" rel="noopener">Awards</a>
@@ -386,17 +416,26 @@
             </div>
             <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
 
+            <!-- removed 'Recent highlights (expand)' block; keep only the external links -->
             <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
               <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/stats" target="_blank" rel="noopener">Overall statistics</a>
               <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/awards" target="_blank" rel="noopener">Awards</a>
             </div>
           </div>
-        </div> <!-- /.highlights -->
+        </div>
+      </section>
 
-      </section> <!-- /.cricheroes-section -->
+      <!-- Press & Media — Applauses -->
+      <section class="card" id="press-media" aria-labelledby="press-media-heading">
+        <h3 id="press-media-heading" style="margin:0 0 6px 0">Press & Media — Applauses</h3>
+        <p class="muted" style="margin:0 0 10px 0;font-size:13px">Clippings and mentions (PDF).</p>
+        <div class="hl-links" style="margin-top:4px">
+          <a href="https://drive.google.com/file/d/1lAvKMJRQiX6aIbxpC90bUY4mn2c4DoC3/view" target="_blank" rel="noopener">View applauses / newspaper clippings (Google Drive)</a>
+        </div>
+      </section>
 
-      <!-- Education -->
-      <section class="card" aria-labelledby="education-heading">
+      <!-- Education (separate block) -->
+      <section class="card" id="education" aria-labelledby="education-heading" style="margin-top:12px">
         <h3 id="education-heading" style="margin:0 0 6px 0">Education</h3>
         <div style="font-size:13px;line-height:1.3;display:flex;flex-direction:column;gap:10px;margin-top:6px">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
@@ -426,18 +465,6 @@
       </section>
     </main>
   </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      var btn = document.getElementById('download-pdf');
-      if (btn) {
-        btn.addEventListener('click', function () {
-          // Give browsers a moment to clear transient states, then open print dialog
-          setTimeout(function () { window.print(); }, 80);
-        });
-      }
-    });
-  </script>
 
   <script src="script.js" defer></script>
  </body>
