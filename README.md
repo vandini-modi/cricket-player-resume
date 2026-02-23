@@ -13,7 +13,10 @@ This repository contains a comprehensive webpage for showcasing a cricket player
 
 ## How to generate PDF from the HTML?
 cd location
+
 npm init -y
+
 npm install puppeteer
+
 node generate-pdf.js
 
