@@ -9,3 +9,11 @@ This repository contains a comprehensive webpage for showcasing a cricket player
 - **Achievements Section**: Highlights key achievements, awards, and milestones in the player's career.
 - **Gallery**: Photos and videos from matches and events.
 - **Contact Information**: Easily accessible contact details for sponsorships and inquiries.
+
+<!--
+## How to generate PDF?
+cd location
+npm init -y
+npm install puppeteer
+node generate-pdf.js
+-->
