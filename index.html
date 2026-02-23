@@ -81,12 +81,14 @@
     /* chip variants */
     .chip { /* default chip color for general chips */ color: var(--accent-1); }
     .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
-    /* make 'Available' a green pill */
+    /* make 'Available' a green text-only pill (no green background) */
     .chip.avail {
-      color: #fff;
-      background: linear-gradient(90deg, var(--available), #4ca36a);
-      box-shadow: 0 8px 20px rgba(83,167,122,0.12);
-      border: none;
+      color: var(--available);
+      /* use the default chip background instead of green */
+      background: rgba(255,255,255,0.7);
+      /* match default chip shadow so it doesn't stand out as a colored pill */
+      box-shadow: 0 4px 10px rgba(16,24,40,0.04);
+      border: 1px solid rgba(83,167,122,0.10); /* optional subtle green outline */
     }
     /* show a real image if present */
     .avatar img{
@@ -291,39 +293,52 @@
 
     /* Print-friendly */
     @media print{
-      body{background:white}
-      .container{box-shadow:none}
-    }
+      /* try to keep colors when printing */
+      * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
 
-    /* clickable profile link chips (clear hover / focus) */
-    .link-chip{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,0.98);
-      color:var(--accent-1);
-      font-weight:600;
-      text-decoration:none;
-      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
-      transition:transform .14s ease, background .12s ease, color .12s ease;
-      border:1px solid rgba(15,23,42,0.03);
-    }
-    .link-chip svg{width:14px;height:14px;opacity:.9}
-    .link-chip:hover{
-      text-decoration:underline;
-      color:var(--accent-2);
-      transform:translateY(-3px);
-      cursor:pointer;
-      background:linear-gradient(90deg, rgba(53,202,254,0.04), rgba(7,139,220,0.02));
-    }
-    .link-chip:focus-visible{outline:3px solid rgba(7,139,220,0.14); outline-offset:4px; border-radius:10px}
-    .link-chip.primary{ background:var(--accent-1); color:white; box-shadow:0 10px 26px rgba(7,139,220,0.12) }
-    .link-chip.primary:hover{ filter:brightness(.98); transform:translateY(-2px) }
+      @page { size: A4 portrait; margin: 12mm; }
 
-    /* improve small-note visibility */
-    .muted.tip{ font-size:13px; margin-top:6px; color:var(--muted) }
+      body{background:white !important; color:#0b1220 !important}
+      .container{
+        box-shadow:none !important;
+        background:white !important;
+        max-width:100% !important;
+        margin:0 !important;
+        border-radius:0 !important;
+        padding:0 !important;
+      }
+
+      /* remove boxed visuals like shadows, gradients and translucent chips */
+      .card, .hl-card, .stat, .sidebar, .chip, .chip-2, .chip.avail, .link-chip{
+        box-shadow:none !important;
+        background:transparent !important;
+        border:none !important;
+      }
+
+      /* keep readable text color for chips/links */
+      .chip, .link-chip { color: inherit !important; font-weight:600 !important; text-decoration:underline !important; }
+
+      /* expand layout for print */
+      .container { display:block !important; }
+      .sidebar{display:block !important; width:100% !important;}
+      .main{display:block !important; width:100% !important; padding:0 8mm !important;}
+
+      /* avoid awkward breaks inside cards */
+      .card, .hl-card { break-inside: avoid; page-break-inside: avoid; }
+
+      /* show link URLs inline for accessibility */
+      a[href]:after { content: " (" attr(href) ")"; font-size:10px; color:#444; }
+
+      /* hide UI-only items in print (download button, small badges, availability pill) */
+      .download-pdf, .chip.avail { display:none !important; }
+
+      /* simplify avatar for print */
+      .avatar { box-shadow:none !important; background:transparent !important; }
+      .avatar img { max-width:64px; max-height:64px; }
+
+      /* remove subtle dividers */
+      table.stats-table th, table.stats-table td { border-bottom:1px solid rgba(0,0,0,0.06) !important; }
+    }
   </style>
 
 </head>
@@ -381,6 +396,8 @@
 
         <div style="display:flex;gap:10px;align-items:center">
           <div class="chip avail" title="Availability">Available</div>
+          <!-- Download PDF button (hidden in print via CSS) -->
+          <button id="download-pdf" class="link-chip primary download-pdf" style="margin-left:6px" title="Download / Print PDF">Download PDF</button>
         </div>
       </div>
 
@@ -482,6 +499,18 @@
       </section>
     </main>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.getElementById('download-pdf');
+      if (btn) {
+        btn.addEventListener('click', function () {
+          // Give browsers a moment to clear transient states, then open print dialog
+          setTimeout(function () { window.print(); }, 80);
+        });
+      }
+    });
+  </script>
 
   <script src="script.js" defer></script>
  </body>
