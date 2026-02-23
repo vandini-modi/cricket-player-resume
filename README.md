@@ -10,10 +10,10 @@ This repository contains a comprehensive webpage for showcasing a cricket player
 - **Gallery**: Photos and videos from matches and events.
 - **Contact Information**: Easily accessible contact details for sponsorships and inquiries.
 
-<!--
+
 ## How to generate PDF from the HTML?
 cd location
 npm init -y
 npm install puppeteer
 node generate-pdf.js
--->
+
