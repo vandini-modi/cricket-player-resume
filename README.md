@@ -11,7 +11,7 @@ This repository contains a comprehensive webpage for showcasing a cricket player
 - **Contact Information**: Easily accessible contact details for sponsorships and inquiries.
 
 <!--
-## How to generate PDF?
+## How to generate PDF from the HTML?
 cd location
 npm init -y
 npm install puppeteer
