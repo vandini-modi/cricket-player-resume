@@ -189,21 +189,3 @@ document.addEventListener('keydown', (event) => {
   })();
 
 })();
-
-document.addEventListener('click', function (e) {
-  const a = e.target.closest && e.target.closest('a.link-chip.whatsapp');
-  if (!a) return;
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (isMobile) {
-    e.preventDefault();
-    const href = a.getAttribute('href') || '';
-    // convert https://wa.me/PHONE?text=... -> whatsapp://send?phone=PHONE&text=...
-    const m = href.match(/wa\.me\/(\d+)(\?text=.*)?/);
-    if (m) {
-      const phone = m[1];
-      const text = m[2] ? m[2].replace('?text=','&text=') : '';
-      const url = `whatsapp://send?phone=${phone}${text}`;
-      window.open(url, '_blank', 'noopener');
-    }
-  }
-}, false);
