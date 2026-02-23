@@ -90,174 +90,43 @@
       box-shadow: 0 4px 10px rgba(16,24,40,0.04);
       border: 1px solid rgba(83,167,122,0.10); /* optional subtle green outline */
     }
-    /* show a real image if present */
-    .avatar img{
-      width:100%;
-      height:100%;
-      border-radius:50%;
-      object-fit:cover;
-      display:block;
-    }
-    .name{
-      display:flex;
-      flex-direction:column;
-    }
-    .name h1{
-      margin:0;
-      font-size:20px;
-      letter-spacing:0.2px;
-    }
-    .name p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:13px;
-    }
 
-    .contact{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      font-size:13px;
-      color:var(--muted);
-    }
-    .contact .item{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
-    .chip{
+    /* WhatsApp button — compact, icon + label */
+    .whatsapp-btn{
       display:inline-flex;
+      align-items:center;
       gap:8px;
-      align-items:center;
-      background:rgba(255,255,255,0.7);
-      padding:8px 10px;
+      padding:6px 10px;
       border-radius:999px;
-      font-weight:600;
-      color:var(--accent-1);
-      width:fit-content;
-      box-shadow: 0 4px 10px rgba(16,24,40,0.04);
+      background: linear-gradient(90deg,#25D366,#1BA851);
+      color:#fff;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 8px 22px rgba(37,211,102,0.12);
+      border:none;
+      vertical-align:middle;
+      transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      margin-left:8px;
+    }
+    .whatsapp-btn svg{width:16px;height:16px;flex:0 0 16px}
+    .whatsapp-btn:hover{transform:translateY(-2px); box-shadow:0 14px 32px rgba(37,211,102,0.14); opacity:0.98}
+    .whatsapp-btn:active{transform:translateY(0)}
+    .whatsapp-btn .label{font-size:13px;line-height:1}
+
+    /* Print: make WhatsApp appear non-interactive and avoid adding URL text */
+    @media print{
+      .whatsapp-btn{
+        background:none !important;
+        box-shadow:none !important;
+        color:inherit !important;
+        padding:0 !important;
+        margin-left:6px !important;
+      }
+      .whatsapp-btn .label{color:inherit !important}
+      /* Ensure browsers do not append raw URLs */
+      a[href]:after { content: none !important; }
     }
 
-    /* Skills */
-    .skills{display:flex;flex-direction:column;gap:10px}
-    .skill{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-    .skill .label{font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
-    .bar{
-      height:10px;
-      background:linear-gradient(90deg, rgba(15,23,42,0.06), rgba(15,23,42,0.04));
-      border-radius:999px;
-      overflow:hidden;
-    }
-    .bar > span{
-      display:block;
-      height:100%;
-      background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      border-radius:999px;
-      transition:width 700ms cubic-bezier(.2,.9,.3,1);
-    }
-
-    /* MAIN */
-    .main{
-      padding:22px;
-    }
-    .header-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-    }
-    .title{
-      display:flex;
-      gap:16px;
-      align-items:center;
-    }
-    .title h2{margin:0;font-size:18px;color:#0b1220}
-    .meta{
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-      margin-top:18px;
-    }
-    /* Match highlights */
-    .highlights{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:18px;
-    }
-    .hl-card{
-      padding:12px;
-      border-radius:12px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.98), var(--glass));
-      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
-    }
-    .hl-card h4{margin:0 0 8px 0;font-size:14px;color:#0b1220}
-    .hl-links a{display:inline-block;margin-right:10px;color:var(--accent-1);font-weight:600;text-decoration:none}
-    .hl-links a:hover{text-decoration:underline}
-
-    .stat{
-      background:linear-gradient(180deg, rgba(255,255,255,0.8), var(--glass));
-      padding:12px;
-      border-radius:12px;
-      text-align:center;
-      box-shadow: 0 6px 18px rgba(6,10,30,0.04);
-    }
-    .stat .num{font-size:20px;font-weight:700;color:var(--accent-1)}
-    .stat .label{font-size:12px;color:var(--muted)}
-
-    section.card{
-      margin-top:18px;
-      padding:16px;
-      border-radius:12px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98));
-      box-shadow: 0 8px 26px rgba(11,20,40,0.03);
-    }
-
-    /* Achievements */
-    ul.achievements{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-    ul.achievements li{
-      display:flex;gap:12px;align-items:flex-start;padding:8px;border-radius:8px;
-      transition:background 180ms;
-    }
-    ul.achievements li:hover{background:rgba(6,182,212,0.03)}
-    .badge{
-      min-width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,var(--accent-2),var(--accent-1));
-      display:flex;align-items:center;justify-content:center;color:white;font-weight:700;
-      box-shadow: 0 6px 16px rgba(6,182,212,0.08);
-      flex-shrink:0;
-    }
-    .ach-text{font-size:14px;color:#0b1220}
-
-    /* Performance table */
-    table.stats-table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:14px;
-    }
-    table.stats-table th, table.stats-table td{
-      padding:10px 12px;
-      text-align:left;
-      border-bottom:1px dashed rgba(15,23,42,0.06);
-    }
-    table.stats-table th{
-      color:var(--muted);
-      font-weight:600;
-      font-size:13px;
-    }
-    .best{font-weight:700;color:var(--accent-1)}
-    .muted{color:var(--muted)}
-
-    /* UX / Micro-interactions */
-    html{scroll-behavior:smooth}
     .container{max-width:1100px}
     .card{transition:box-shadow .22s ease, transform .18s ease}
     .card:hover{transform:translateY(-4px); box-shadow:0 18px 40px rgba(6,10,30,0.06)}
@@ -291,52 +160,73 @@
       .avatar{width:72px;height:72px;font-size:24px}
     }
 
-    /* Print-friendly */
+    /* Print-friendly (no raw URLs, compact, charming look) */
     @media print{
-      /* try to keep colors when printing */
+      /* keep colors when printing */
       * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
 
-      @page { size: A4 portrait; margin: 12mm; }
+      /* tighten page margins to help 1-page output; change to 'letter' if you prefer */
+      @page { size: A4 portrait; margin: 6mm; }
 
-      body{background:white !important; color:#0b1220 !important}
-      .container{
-        box-shadow:none !important;
-        background:white !important;
-        max-width:100% !important;
-        margin:0 !important;
-        border-radius:0 !important;
-        padding:0 !important;
+      html, body {
+        background: #fff !important;
+        color: #0b1220 !important;
+        font-size: 12px !important;
+        line-height: 1.28 !important;
       }
 
-      /* remove boxed visuals like shadows, gradients and translucent chips */
-      .card, .hl-card, .stat, .sidebar, .chip, .chip-2, .chip.avail, .link-chip{
+      /* container / layout */
+      .container{
+        max-width:100% !important;
+        margin:0 !important;
+        padding:6mm !important;
+        background:transparent !important;
+        box-shadow:none !important;
+        border-radius:0 !important;
+        display:block !important;
+      }
+      .sidebar, .main { display:block !important; width:100% !important; padding:0 !important; }
+
+      /* remove UI visuals */
+      .card, .hl-card, .stat, .chip, .chip-2, .link-chip, .download-pdf, #download-pdf {
         box-shadow:none !important;
         background:transparent !important;
         border:none !important;
       }
+      .download-pdf, #download-pdf { display:none !important; } /* hide print button */
 
-      /* keep readable text color for chips/links */
-      .chip, .link-chip { color: inherit !important; font-weight:600 !important; text-decoration:underline !important; }
+      /* keep "Available" visible as green text (no green background) */
+      .chip.avail {
+        display:inline-block;
+        color: var(--available) !important;
+        background: none !important;
+        box-shadow:none !important;
+        border:none !important;
+        padding:0 !important;
+        font-weight:700 !important;
+      }
 
-      /* expand layout for print */
-      .container { display:block !important; }
-      .sidebar{display:block !important; width:100% !important;}
-      .main{display:block !important; width:100% !important; padding:0 8mm !important;}
+      /* Do NOT append raw URLs after links in the printed content */
+      a[href]:after { content: none !important; }
 
-      /* avoid awkward breaks inside cards */
-      .card, .hl-card { break-inside: avoid; page-break-inside: avoid; }
+      /* Make links appear like plain, subtle text (non-interactive) */
+      a, .link-chip {
+        color: #0b1220 !important;
+        text-decoration: none !important;
+        border-bottom: 1px dashed rgba(11,18,40,0.06);
+        padding-bottom: 1px;
+      }
 
-      /* show link URLs inline for accessibility */
-      a[href]:after { content: " (" attr(href) ")"; font-size:10px; color:#444; }
-
-      /* hide UI-only items in print (download button, small badges, availability pill) */
-      .download-pdf, .chip.avail { display:none !important; }
-
-      /* simplify avatar for print */
-      .avatar { box-shadow:none !important; background:transparent !important; }
+      /* reduce paddings / margins to help fit one page */
+      .card { padding:10px !important; margin:6px 0 !important; }
+      .hl-card { padding:10px !important; }
       .avatar img { max-width:64px; max-height:64px; }
 
-      /* remove subtle dividers */
+      /* avoid awkward breaks */
+      h1,h2,h3,h4 { page-break-after: avoid; page-break-inside: avoid; }
+      .card, .hl-card { break-inside: avoid; page-break-inside: avoid; }
+
+      /* subtle table divider for print */
       table.stats-table th, table.stats-table td { border-bottom:1px solid rgba(0,0,0,0.06) !important; }
     }
   </style>
@@ -372,13 +262,16 @@
         <div class="item" data-key="location"><strong class="chip">Location</strong><span class="muted">Vadodara, Gujarat, India</span></div>
         <div class="item" data-key="phone">
           <strong class="chip">Phone</strong>
-          <span class="muted">+91 79900 35270</span>
-          <a class="link-chip" href="https://wa.me/917990035270" target="_blank" rel="noopener noreferrer" title="Open WhatsApp chat with +91 79900 35270" style="margin-left:8px">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path fill="#25D366" d="M20.52 3.48A11.92 11.92 0 0 0 12.06.5 11.95 11.95 0 0 0 .5 12.06c0 2.12.56 4.1 1.62 5.86L.5 23.5l5.68-1.49A11.95 11.95 0 0 0 12.06 23.5 11.92 11.92 0 0 0 20.52 3.48z"/>
-              <path fill="#fff" d="M17.3 14.1c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15s-.78.98-.96 1.18c-.18.2-.36.22-.66.08-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.76-1.65-2.06-.18-.3-.02-.46.14-.61.14-.14.3-.36.45-.55.15-.2.2-.36.3-.6.1-.24 0-.46-.05-.61-.06-.15-.68-1.62-.93-2.21-.24-.58-.48.5-.66.5-.18 0-.4-.01-.62-.01-.2 0-.54.07-.82.34-.28.28-1.08 1.05-1.08 2.56 0 1.5 1.1 2.96 1.25 3.17.15.2 2.15 3.36 5.2 4.71 3.05 1.35 3.05.9 3.6.84.56-.06 1.78-.73 2.03-1.46.24-.73.24-1.36.17-1.49-.06-.13-.24-.2-.54-.35z"/>
+          <!-- clickable phone number -->
+          <a href="tel:+917990035270" class="muted" style="text-decoration:none;color:inherit">+91 79900 35270</a>
+
+          <!-- WhatsApp button (green, icon + label) -->
+          <a class="whatsapp-btn" href="https://wa.me/917990035270" target="_blank" rel="noopener noreferrer" title="Open WhatsApp chat with +91 79900 35270" aria-label="Open WhatsApp chat with +91 79900 35270" role="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false" role="img">
+              <path fill="#fff" d="M20.52 3.48A11.92 11.92 0 0 0 12.06.5 11.95 11.95 0 0 0 .5 12.06c0 2.12.56 4.1 1.62 5.86L.5 23.5l5.68-1.49A11.95 11.95 0 0 0 12.06 23.5 11.92 11.92 0 0 0 20.52 3.48z"/>
+              <path fill="#063A26" d="M17.3 14.1c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15s-.78.98-.96 1.18c-.18.2-.36.22-.66.08-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.76-1.65-2.06-.18-.3-.02-.46.14-.61.14-.14.3-.36.45-.55.15-.2.2-.36.3-.6.1-.24 0-.46-.05-.61-.06-.15-.68-1.62-.93-2.21-.24-.58-.48.5-.66.5-.18 0-.4-.01-.62-.01-.2 0-.54.07-.82.34-.28.28-1.08 1.05-1.08 2.56 0 1.5 1.1 2.96 1.25 3.17.15.2 2.15 3.36 5.2 4.71 3.05 1.35 3.05.9 3.6.84.56-.06 1.78-.73 2.03-1.46.24-.73.24-1.36.17-1.49-.06-.13-.24-.2-.54-.35z"/>
             </svg>
-            <span style="margin-left:8px">WhatsApp</span>
+            <span class="label">WhatsApp</span>
           </a>
         </div>
         <div class="item" data-key="email"><strong class="chip">Email</strong><span class="muted">dhyeymodi2411@gmail.com</span></div>
