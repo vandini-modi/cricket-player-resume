@@ -178,12 +178,11 @@
       .avatar{width:72px;height:72px;font-size:24px}
     }
 
-    /* Print-friendly (no raw URLs, compact, charming look) */
+    /* Print-friendly: compact layout, keep links visible, remove big sidebar gap */
     @media print{
-      /* keep colors when printing */
+      /* preserve colors */
       * { -webkit-print-color-adjust: exact !important; color-adjust: exact !important; }
 
-      /* tighten page margins to help 1-page output; change to 'letter' if you prefer */
       @page { size: A4 portrait; margin: 6mm; }
 
       html, body {
@@ -193,59 +192,86 @@
         line-height: 1.28 !important;
       }
 
-      /* container / layout */
+      /* page container */
       .container{
         max-width:100% !important;
         margin:0 !important;
-        padding:6mm !important;
+        padding:4mm !important;
         background:transparent !important;
         box-shadow:none !important;
         border-radius:0 !important;
         display:block !important;
       }
-      .sidebar, .main { display:block !important; width:100% !important; padding:0 !important; }
 
-      /* remove UI visuals */
-      .card, .hl-card, .stat, .chip, .chip-2, .link-chip, .download-pdf, #download-pdf {
+      /* collapse sidebar so it doesn't create a large top block */
+      .sidebar{
+        display:block !important;
+        width:100% !important;
+        padding:6px 0 !important;
+        background:transparent !important;
+        box-shadow:none !important;
+        border-radius:0 !important;
+        min-height:auto !important;
+        margin-bottom:6px !important;
+      }
+
+      /* tighten profile area */
+      .profile{ gap:10px !important; margin-bottom:6px !important; }
+      .avatar{ width:64px !important; height:64px !important; box-shadow:none !important; }
+      .avatar img{ width:64px !important; height:64px !important; object-fit:cover !important; }
+
+      /* main area */
+      .main{ width:100% !important; padding:0 !important; }
+
+      /* cards: remove heavy visuals and reduce spacing */
+      .card, .hl-card, .stat {
         box-shadow:none !important;
         background:transparent !important;
         border:none !important;
+        padding:8px !important;
+        margin:6px 0 !important;
       }
-      .download-pdf, #download-pdf { display:none !important; } /* hide print button */
 
-      /* keep "Available" visible as green text (no green background) */
+      /* chips */
+      .chip, .chip-2 {
+        background:none !important;
+        box-shadow:none !important;
+        border:none !important;
+        padding:0 !important;
+        font-weight:600 !important;
+        color: inherit !important;
+      }
       .chip.avail {
-        display:inline-block;
         color: var(--available) !important;
-        background: none !important;
+        background:none !important;
         box-shadow:none !important;
         border:none !important;
         padding:0 !important;
         font-weight:700 !important;
       }
 
-      /* Do NOT append raw URLs after links in the printed content */
+      /* keep links visible but do not print the raw URL */
       a[href]:after { content: none !important; }
-
-      /* Make links appear like plain, subtle text (non-interactive) */
       a, .link-chip {
-        color: #0b1220 !important;
-        text-decoration: none !important;
-        border-bottom: 1px dashed rgba(11,18,40,0.06);
-        padding-bottom: 1px;
+        color: var(--accent-1) !important;
+        text-decoration: underline !important;
+        font-weight:600 !important;
       }
 
-      /* reduce paddings / margins to help fit one page */
-      .card { padding:10px !important; margin:6px 0 !important; }
-      .hl-card { padding:10px !important; }
-      .avatar img { max-width:64px; max-height:64px; }
+      /* WhatsApp button renders as subtle text in print */
+      .whatsapp-btn{
+        background:none !important;
+        box-shadow:none !important;
+        color:var(--accent-1) !important;
+        padding:0 !important;
+        margin-left:6px !important;
+      }
+      .whatsapp-btn .label{ color: inherit !important; }
 
-      /* avoid awkward breaks */
+      /* avoid page breaks and reduce large spacing */
       h1,h2,h3,h4 { page-break-after: avoid; page-break-inside: avoid; }
       .card, .hl-card { break-inside: avoid; page-break-inside: avoid; }
-
-      /* subtle table divider for print */
-      table.stats-table th, table.stats-table td { border-bottom:1px solid rgba(0,0,0,0.06) !important; }
+      .header-row{ margin-bottom:6px !important; }
     }
   </style>
 
