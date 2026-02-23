@@ -80,7 +80,13 @@
     /* chip variants */
     .chip { /* default chip color for general chips */ color: var(--accent-1); }
     .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
-    .chip.avail { color: var(--accent-3); } /* availability uses accent-3 */
+    /* make the "Available" chip green (#138808) with white text */
+    .chip.avail {
+      background: #138808;
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(19,136,8,0.16);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
     /* show a real image if present */
     .avatar img{
       width:100%;
@@ -349,6 +355,19 @@
 
         <div class="item" data-key="location"><strong class="chip">Location</strong><span class="muted">Vadodara, Gujarat, India</span></div>
         <div class="item" data-key="phone"><strong class="chip">Phone</strong><span class="muted">+91 79900 35270</span></div>
+
+        <!-- WhatsApp quick-connect button -->
+        <div style="margin-top:6px">
+          <a class="link-chip primary" href="https://wa.me/917990035270" target="_blank" rel="noopener" title="Chat on WhatsApp">
+            <!-- WhatsApp SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" style="width:16px;height:16px;vertical-align:middle;margin-right:8px;fill:currentColor">
+              <path d="M20.52 3.48A11.9 11.9 0 0 0 12 .5C6.21.5 1.5 5.21 1.5 11c0 1.94.5 3.78 1.45 5.4L.5 23.5l6.96-1.82A11.5 11.5 0 0 0 12 22c5.79 0 10.5-4.71 10.5-10.5 0-2.81-1.04-5.44-2.98-7.02zM12 20.5c-1.05 0-2.07-.22-3-.63l-.22-.1-4.13 1.08 1.1-3.98-.13-.24A8.5 8.5 0 1 1 20.5 11 8.47 8.47 0 0 1 12 20.5z"/>
+              <path d="M17.3 14.1c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15s-.77.97-.95 1.17c-.18.2-.36.22-.66.08a7.1 7.1 0 0 1-2.09-1.29 7.03 7.03 0 0 1-1.3-1.9c-.14-.35 0-.54.12-.69.12-.12.27-.31.4-.47.13-.16.17-.28.27-.47.1-.18.04-.35-.03-.5-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.35-.27.28-1.05 1.03-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.12 3.3 5.14 4.63 3.02 1.33 3.02.89 3.57.83.55-.06 1.76-.72 2.01-1.41.25-.69.25-1.28.17-1.4-.08-.12-.27-.18-.57-.33z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+
         <div class="item" data-key="email"><strong class="chip">Email</strong><span class="muted">dhyeymodi2411@gmail.com</span></div>
         <div class="item" data-key="languages"><strong class="chip">Languages</strong><span class="muted">Gujarati, Hindi, English</span></div>
       </div>
