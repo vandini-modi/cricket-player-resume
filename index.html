@@ -77,7 +77,25 @@
       font-size:28px;
       box-shadow: 0 6px 18px rgba(109,40,217,0.16), inset 0 -6px 18px rgba(255,255,255,0.06);
       flex-shrink:0;
+      overflow:hidden; /* prevent large image from overflowing container */
     }
+
+    /* constrain avatar image to the circle and cover the area */
+    .avatar img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      border-radius:50%;
+    }
+
+    /* general safety: prevent any other images from stretching the layout */
+    img {
+      max-width:100%;
+      height:auto;
+      display:block;
+    }
+
     /* chip variants */
     .chip { /* default chip color for general chips */ color: var(--accent-1); }
     .chip-2 { color: var(--accent-2); } /* use for Age / DOB labels */
@@ -315,7 +333,7 @@
           <a class="link-chip" id="link-9476612" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/" target="_blank" rel="noopener" data-id="9476612">Profile (9476612)</a>
         </div>
 
-        <div class="highlights" role="region" aria-label="Profiles list" style="margin-top:12px;grid-template-columns: 1fr 1fr;">
+        <div class="highlights" role="region" aria-label="Profiles list" style="margin-top:12px; display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
           <!-- Profile 301505 -->
           <div class="hl-card" aria-labelledby="profile-301505-title">
             <h4 id="profile-301505-title">Profile (301505)</h4>
@@ -326,7 +344,6 @@
             </div>
             <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
 
-            <!-- removed 'Recent highlights (expand)' block; keep only the external links -->
             <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
               <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/stats" target="_blank" rel="noopener">Overall statistics</a>
               <a class="link-chip" href="https://cricheroes.com/player-profile/301505/Dhyey-Parag-Modi/awards" target="_blank" rel="noopener">Awards</a>
@@ -343,26 +360,17 @@
             </div>
             <p class="muted" style="margin:0 0 8px 0;font-size:13px">Top performances & recent matches</p>
 
-            <!-- removed 'Recent highlights (expand)' block; keep only the external links -->
             <div style="margin-top:8px;display:flex;gap:12px;flex-wrap:wrap">
               <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/stats" target="_blank" rel="noopener">Overall statistics</a>
               <a class="link-chip" href="https://cricheroes.com/player-profile/9476612/dhyey-parag-modi/awards" target="_blank" rel="noopener">Awards</a>
             </div>
           </div>
-        </div>
-      </section>
+        </div> <!-- /.highlights -->
 
-      <!-- Press & Media — Applauses -->
-      <section class="card" id="press-media" aria-labelledby="press-media-heading">
-        <h3 id="press-media-heading" style="margin:0 0 6px 0">Press & Media — Applauses</h3>
-        <p class="muted" style="margin:0 0 10px 0;font-size:13px">Clippings and mentions (PDF).</p>
-        <div class="hl-links" style="margin-top:4px">
-          <a href="https://drive.google.com/file/d/1lAvKMJRQiX6aIbxpC90bUY4mn2c4DoC3/view" target="_blank" rel="noopener">View applauses / newspaper clippings (Google Drive)</a>
-        </div>
-      </section>
+      </section> <!-- /.cricheroes-section -->
 
-      <!-- Education (separate block) -->
-      <section class="card" id="education" aria-labelledby="education-heading" style="margin-top:12px">
+      <!-- Education -->
+      <section class="card" aria-labelledby="education-heading">
         <h3 id="education-heading" style="margin:0 0 6px 0">Education</h3>
         <div style="font-size:13px;line-height:1.3;display:flex;flex-direction:column;gap:10px;margin-top:6px">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
